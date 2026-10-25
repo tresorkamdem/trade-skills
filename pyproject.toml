@@ -7,7 +7,7 @@ name = "tradeskills"
 version = "0.1.0"
 description = "Parcours d'apprentissage : analyse financière appliquée au trading et à la gestion de portefeuille"
 requires-python = ">=3.10"
-dependencies = ["numpy", "pandas", "scikit-learn", "matplotlib"]
+dependencies = ["numpy", "pandas", "scikit-learn", "scipy", "matplotlib"]
 
 [project.optional-dependencies]
 dev = ["pytest"]

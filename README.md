@@ -4,36 +4,44 @@ Parcours d'apprentissage complet de l'analyse financière appliquée au trading 
 
 ## Feuille de route
 
-- [x] Moteur Python : données, métriques, backtest glissant avec coûts, gestion du risque
-- [x] Journal de trading et statistiques
-- [ ] [01 · Bases des marchés](modules/01-bases-des-marches/lecon.md) (leçon et exercices prêts)
-- [ ] [02 · Analyse fondamentale](modules/02-analyse-fondamentale/)
-- [ ] [03 · Analyse technique](modules/03-analyse-technique/)
-- [ ] [04 · Gestion du risque](modules/04-gestion-du-risque/)
-- [ ] [05 · Day trading et swing trading](modules/05-day-et-swing-trading/)
-- [ ] [06 · TradingView et Pine Script](modules/06-tradingview-pine-script/)
-- [ ] [07 · Backtesting rigoureux](modules/07-backtesting-rigoureux/)
-- [ ] [08 · Optimisation de portefeuille avancée](modules/08-optimisation-de-portefeuille/)
-- [ ] [09 · Performance et reporting](modules/09-performance-et-reporting/)
-- [ ] [10 · Parcours pro](modules/10-parcours-pro/)
-
 Coche un module quand tu as fait tous ses exercices.
+
+| | Module | Durée | Outils | Lien avec tes projets |
+| --- | --- | --- | --- | --- |
+| [ ] | [01 · Bases des marchés](modules/01-bases-des-marches/lecon.md) | 1 à 2 sem. | | Coût du turnover de la thèse |
+| [ ] | [02 · Analyse fondamentale](modules/02-analyse-fondamentale/lecon.md) | 3 sem. | `fundamentals` | Paquet A6 de MAÀT |
+| [ ] | [03 · Analyse technique](modules/03-analyse-technique/lecon.md) | 3 sem. | `indicators`, `signals` | Tests statistiques |
+| [ ] | [04 · Gestion du risque](modules/04-gestion-du-risque/lecon.md) | 2 sem. | `risk` | Prolonge la thèse au niveau du trade |
+| [ ] | [05 · Day et swing trading](modules/05-day-et-swing-trading/lecon.md) | 4 sem. | `journal` | Source du track record |
+| [ ] | [06 · TradingView et Pine Script](modules/06-tradingview-pine-script/lecon.md) | 3 sem. | `pine/`, `node/` | Alertes Telegram (comme SESHAT) |
+| [ ] | [07 · Backtesting rigoureux](modules/07-backtesting-rigoureux/lecon.md) | 3 sem. | `validation` | Test de Sharpe du « Ausblick » |
+| [ ] | [08 · Optimisation de portefeuille avancée](modules/08-optimisation-de-portefeuille/lecon.md) | 4 sem. | `optim` | Shrinkage non linéaire ; offre C1 v2 |
+| [ ] | [09 · Performance et reporting](modules/09-performance-et-reporting/lecon.md) | 2 sem. | `report` | Paquet « reporting » de MAÀT |
+| [ ] | [10 · Parcours pro](modules/10-parcours-pro/lecon.md) | 12 à 24 mois | | Plan de développement de MAÀT |
+
+Ordre conseillé : 01 → 04 → 03 → 02 → 05 → 06 → 07 → 08 → 09, et le 10 en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
 
 ## Structure
 
 ```
-modules/      une leçon, des exercices et des solutions par module
-tradeskills/  package Python réutilisable
-  data.py       chargement Kenneth French et CSV OHLCV (export TradingView)
-  metrics.py    rendement, volatilité, Sharpe, Sortino, drawdown, Calmar, turnover
-  portfolio.py  portefeuille GMV, estimateurs empirique / Ledoit-Wolf / OAS, backtest glissant avec coûts
-  risk.py       taille de position, R-multiple, Kelly, espérance
-  journal.py    statistiques du journal de trading
-journal/      modèle de journal de trading
-pine/         scripts TradingView
-node/         outils Node.js (alertes, données)
-data/         données d'exemple (10 portefeuilles sectoriels de Kenneth French)
-tests/        tests automatiques
+modules/        une leçon, des exercices et des solutions par module
+tradeskills/    package Python réutilisable
+  data.py         Kenneth French, CSV OHLCV (export TradingView), cours simulés
+  metrics.py      rendement, volatilité, Sharpe, Sortino, drawdown, Calmar, turnover
+  indicators.py   SMA, EMA, RSI, MACD, ATR, Bollinger, Donchian, VWAP
+  signals.py      backtest d'une stratégie à signal sur un actif
+  risk.py         taille de position, R-multiple, Kelly, espérance, Monte-Carlo
+  journal.py      statistiques du journal de trading
+  fundamentals.py ratios financiers, DCF
+  portfolio.py    GMV, estimateurs empirique / Ledoit-Wolf / OAS, backtest glissant avec coûts
+  validation.py   walk-forward, bootstrap, test de Sharpe, Deflated Sharpe
+  optim.py        shrinkage non linéaire, long-only, tangent, parité de risque, Black-Litterman, CVaR
+  report.py       alpha, bêta, information ratio, Brinson, rapport client
+journal/        modèle de journal de trading
+pine/           scripts TradingView (indicateur, stratégie, RSI)
+node/           serveur d'alertes TradingView vers Telegram
+data/           10, 30 et 48 portefeuilles sectoriels de Kenneth French
+tests/          tests automatiques (Python et Node.js)
 ```
 
 ## Installation
@@ -43,6 +51,7 @@ python3 -m venv .venv
 source .venv/bin/activate        # Windows : .venv\Scripts\activate
 pip install -e ".[dev]"
 pytest                           # vérifie que tout fonctionne
+cd node && npm test              # outils Node.js
 ```
 
 ## Exemple : la thèse, avec des coûts de transaction
@@ -53,6 +62,10 @@ from tradeskills import data, portfolio
 R = data.load_french_csv("data/10_Industry_Portfolios.csv", start=196901)
 print(portfolio.compare(R, window=60, cost_bps=20))
 ```
+
+## Données
+
+Aucune donnée de marché en temps réel n'est incluse. Les exercices utilisent les données de Kenneth French (fournies), des cours simulés (`data.synthetic_ohlcv`) et tes propres exports TradingView (`data.load_ohlcv_csv`).
 
 ## Liens
 

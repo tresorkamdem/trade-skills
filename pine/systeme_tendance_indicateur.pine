@@ -1,0 +1,33 @@
+//@version=6
+// Système de suivi de tendance du module 03 : filtre MM200, cassure Donchian 20, stop 2 ATR.
+// Indicateur seul (pas de backtest) : affiche niveaux et signaux, et déclenche des alertes.
+indicator("Trade Skills · Système tendance", overlay = true)
+
+lenTrend  = input.int(200, "Moyenne de tendance")
+lenEntry  = input.int(20,  "Donchian entrée")
+lenExit   = input.int(10,  "Donchian sortie")
+atrLen    = input.int(14,  "ATR")
+atrMult   = input.float(2.0, "Stop en ATR", step = 0.5)
+
+trend   = ta.sma(close, lenTrend)
+upper   = ta.highest(high, lenEntry)[1]
+lower   = ta.lowest(low, lenExit)[1]
+atrVal  = ta.atr(atrLen)
+
+enTendance = close > trend
+signalAchat = enTendance and ta.crossover(close, upper)
+signalSortie = ta.crossunder(close, lower)
+stop = close - atrMult * atrVal
+
+plot(trend, "MM tendance", color = color.orange, linewidth = 2)
+plot(upper, "Plus haut entrée", color = color.new(color.green, 40))
+plot(lower, "Plus bas sortie", color = color.new(color.red, 40))
+plotshape(signalAchat, "Achat", shape.triangleup, location.belowbar, color.green, size = size.small)
+plotshape(signalSortie, "Sortie", shape.xcross, location.abovebar, color.red, size = size.tiny)
+
+// Message JSON lu par le serveur Node.js (node/webhook.mjs)
+alertcondition(signalAchat, "Achat", '{"type":"achat","symbole":"{{ticker}}","prix":{{close}},"unite":"{{interval}}"}')
+alertcondition(signalSortie, "Sortie", '{"type":"sortie","symbole":"{{ticker}}","prix":{{close}},"unite":"{{interval}}"}')
+
+if signalAchat
+    alert('{"type":"achat","symbole":"' + syminfo.ticker + '","prix":' + str.tostring(close) + ',"stop":' + str.tostring(stop, format.mintick) + '}', alert.freq_once_per_bar_close)

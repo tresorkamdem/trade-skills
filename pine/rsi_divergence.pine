@@ -1,0 +1,25 @@
+//@version=6
+// RSI avec zones et repérage simple des divergences (module 03).
+indicator("Trade Skills · RSI et divergences", overlay = false)
+
+len  = input.int(14, "RSI")
+look = input.int(5, "Pivots (bougies de chaque côté)")
+
+r = ta.rsi(close, len)
+plot(r, "RSI", color = color.purple)
+hline(70, "Surachat", color = color.red)
+hline(30, "Survente", color = color.green)
+
+// Divergence haussière : nouveau plus bas du prix, mais RSI plus haut qu'au pivot précédent
+pl = ta.pivotlow(low, look, look)
+var float lastLow = na
+var float lastRsi = na
+bullDiv = false
+if not na(pl)
+    rsiAtPivot = r[look]
+    bullDiv := not na(lastLow) and pl < lastLow and rsiAtPivot > lastRsi
+    lastLow := pl
+    lastRsi := rsiAtPivot
+
+plotshape(bullDiv, "Divergence haussière", shape.circle, location.bottom, color.green, offset = -look)
+alertcondition(bullDiv, "Divergence haussière", "Divergence haussière RSI sur {{ticker}}")

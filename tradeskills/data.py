@@ -62,3 +62,29 @@ def load_ohlcv_csv(path: str | Path) -> pd.DataFrame:
     if missing:
         raise ValueError(f"Colonnes manquantes : {sorted(missing)}")
     return df.sort_index()
+
+
+def synthetic_ohlcv(
+    n_days: int = 1_000,
+    start_price: float = 100.0,
+    drift: float = 0.07,
+    vol: float = 0.20,
+    seed: int | None = 0,
+) -> pd.DataFrame:
+    """Cours journaliers simulés (mouvement brownien géométrique) pour s'entraîner hors ligne.
+
+    `drift` et `vol` sont annuels. Les prix simulés n'ont, par construction, aucune
+    structure exploitable : une stratégie qui « marche » dessus est un faux positif.
+    C'est un bon test de tes backtests (voir module 07).
+    """
+    rng = np.random.default_rng(seed)
+    dt = 1 / 252
+    rets = rng.normal((drift - 0.5 * vol**2) * dt, vol * np.sqrt(dt), n_days)
+    close = start_price * np.exp(np.cumsum(rets))
+    open_ = np.concatenate([[start_price], close[:-1]]) * np.exp(rng.normal(0, vol * np.sqrt(dt) / 4, n_days))
+    spread = np.abs(rng.normal(0, vol * np.sqrt(dt) / 2, n_days))
+    high = np.maximum(open_, close) * (1 + spread)
+    low = np.minimum(open_, close) * (1 - spread)
+    volume = rng.lognormal(13, 0.4, n_days).round()
+    idx = pd.bdate_range("2020-01-01", periods=n_days, name="date")
+    return pd.DataFrame({"open": open_, "high": high, "low": low, "close": close, "volume": volume}, index=idx)

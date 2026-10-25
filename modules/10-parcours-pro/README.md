@@ -1,7 +1,6 @@
 # Module 10 · Parcours pro
 
-**Statut** : à venir
+- [Leçon](lecon.md)
+- [Exercices](exercices.md)
 
-**Contenu** : Track record vérifiable, cadre légal (§34f GewO, BaFin, agent lié), certifications (CFA, FRM, CQF), offre client.
-
-**Lien avec tes projets** : Transforme MAÀT en activité de gestion conforme.
+Transforme les modules précédents en carrière et en offre MAÀT conforme.
