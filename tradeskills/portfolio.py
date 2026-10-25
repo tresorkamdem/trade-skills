@@ -41,28 +41,23 @@ def gmv_weights(sigma: np.ndarray) -> np.ndarray:
     return x / x.sum()
 
 
-def rolling_backtest(
+def rolling_strategy(
     returns: pd.DataFrame,
     window: int,
-    estimator: Estimator | None,
+    weight_fn: Callable[[np.ndarray], np.ndarray],
     cost_bps: float = 0.0,
 ) -> tuple[pd.Series, pd.DataFrame]:
-    """Réestime les poids chaque période sur les `window` dernières observations.
+    """Backtest glissant générique : `weight_fn(fenêtre)` renvoie les poids de la période suivante.
 
-    `estimator=None` donne la pondération égale 1/n. `cost_bps` est le coût de
-    transaction en points de base par unité de rotation ; il est déduit du rendement
-    de la période où le rééquilibrage a lieu.
+    `cost_bps` est le coût de transaction en points de base par unité de rotation ;
+    il est déduit du rendement de la période où le rééquilibrage a lieu.
     Renvoie (rendements hors échantillon, poids utilisés).
     """
     R = returns.to_numpy()
-    n = R.shape[1]
     weights, rets = [], []
     prev = None
     for t in range(window, len(R)):
-        if estimator is None:
-            w = np.ones(n) / n
-        else:
-            w = gmv_weights(estimator(R[t - window : t]))
+        w = weight_fn(R[t - window : t])
         r = w @ R[t]
         if prev is not None and cost_bps:
             r -= cost_bps / 1e4 * 0.5 * np.abs(w - prev).sum()
@@ -74,6 +69,24 @@ def rolling_backtest(
         pd.Series(rets, index=idx, name="rendement"),
         pd.DataFrame(weights, index=idx, columns=returns.columns),
     )
+
+
+def rolling_backtest(
+    returns: pd.DataFrame,
+    window: int,
+    estimator: Estimator | None,
+    cost_bps: float = 0.0,
+) -> tuple[pd.Series, pd.DataFrame]:
+    """Portefeuille GMV réestimé chaque période sur les `window` dernières observations.
+
+    `estimator=None` donne la pondération égale 1/n.
+    """
+    n = returns.shape[1]
+    if estimator is None:
+        weight_fn = lambda window_: np.ones(n) / n
+    else:
+        weight_fn = lambda window_: gmv_weights(estimator(window_))
+    return rolling_strategy(returns, window, weight_fn, cost_bps)
 
 
 def compare(returns: pd.DataFrame, window: int, cost_bps: float = 0.0) -> pd.DataFrame:

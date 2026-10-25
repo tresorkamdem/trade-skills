@@ -34,3 +34,33 @@ def kelly_fraction(win_rate: float, avg_win_r: float, avg_loss_r: float = 1.0) -
 def expectancy(win_rate: float, avg_win_r: float, avg_loss_r: float = 1.0) -> float:
     """Espérance par trade, en R."""
     return win_rate * avg_win_r - (1 - win_rate) * avg_loss_r
+
+
+def simulate_equity(
+    win_rate: float,
+    avg_win_r: float,
+    risk_pct: float,
+    n_trades: int = 200,
+    n_paths: int = 2_000,
+    seed: int | None = 0,
+):
+    """Simulation Monte-Carlo de courbes de capital (capital initial = 1).
+
+    Chaque trade gagne `avg_win_r` x risque ou perd 1 x risque, avec un risque
+    de `risk_pct` du capital courant. Renvoie un tableau (n_paths, n_trades + 1).
+    """
+    import numpy as np
+
+    rng = np.random.default_rng(seed)
+    wins = rng.random((n_paths, n_trades)) < win_rate
+    step = np.where(wins, 1 + risk_pct * avg_win_r, 1 - risk_pct)
+    equity = np.cumprod(step, axis=1)
+    return np.hstack([np.ones((n_paths, 1)), equity])
+
+
+def max_drawdowns(equity):
+    """Perte maximale de chaque trajectoire d'un tableau renvoyé par `simulate_equity`."""
+    import numpy as np
+
+    peaks = np.maximum.accumulate(equity, axis=1)
+    return (equity / peaks - 1).min(axis=1)

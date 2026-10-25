@@ -1,7 +1,9 @@
 # Module 04 · Gestion du risque
 
-**Statut** : à venir
+Le module le plus important du parcours : **on peut gagner avec une stratégie moyenne et une excellente gestion du risque, jamais l'inverse.**
 
-**Contenu** : Taille de position, stop, R-multiple, espérance, drawdown, Kelly. Le module le plus important.
+- [Leçon](lecon.md)
+- [Exercices](exercices.md)
+- [Solutions](solutions/solutions_04.py)
 
-**Lien avec tes projets** : Outils déjà prêts dans `tradeskills/risk.py`.
+Outils : `tradeskills/risk.py`.

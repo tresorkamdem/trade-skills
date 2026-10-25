@@ -1,0 +1,12 @@
+{
+  "name": "trade-skills-webhook",
+  "version": "0.1.0",
+  "description": "Reçoit les alertes TradingView et les transmet sur Telegram",
+  "type": "module",
+  "main": "webhook.mjs",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node webhook.mjs",
+    "test": "node --test"
+  }
+}

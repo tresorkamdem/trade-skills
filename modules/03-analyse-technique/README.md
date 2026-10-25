@@ -1,7 +1,7 @@
 # Module 03 · Analyse technique
 
-**Statut** : à venir
+- [Leçon](lecon.md)
+- [Exercices](exercices.md)
+- [Solutions](solutions/solutions_03.py)
 
-**Contenu** : Chandeliers, tendances, supports et résistances, volumes, RSI, MACD, moyennes mobiles, ATR, VWAP.
-
-**Lien avec tes projets** : Chaque indicateur est testé statistiquement, comme en cours de statistiques.
+Outils : `tradeskills/indicators.py`, `tradeskills/signals.py`.

@@ -1,7 +1,7 @@
 # Module 09 · Mesure de performance et reporting
 
-**Statut** : à venir
+- [Leçon](lecon.md)
+- [Exercices](exercices.md)
+- [Solutions](solutions/solutions_09.py)
 
-**Contenu** : Sharpe, Sortino, Calmar, alpha et bêta, attribution de performance, rapport client.
-
-**Lien avec tes projets** : Nouveau rapport au style MAÀT.
+Outils : `tradeskills/metrics.py`, `tradeskills/report.py`. Base d'un futur paquet « reporting de performance » de MAÀT.
