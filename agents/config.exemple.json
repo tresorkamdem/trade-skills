@@ -29,6 +29,16 @@
       "poids_max": 0.4,
       "cout_bps": 10,
       "params": {"methode": "gmv_lw", "fenetre": 252}
+    },
+    {
+      "nom": "tradingview",
+      "style": "signaux",
+      "capital": 5000,
+      "univers": ["SXR8.DE", "SXRV.DE", "EUNL.DE", "EXS1.DE", "AAPL", "MSFT", "NVDA", "SAP.DE"],
+      "risque_par_trade": 0.01,
+      "max_positions": 4,
+      "poids_max": 0.3,
+      "params": {"fichier": "node/signaux.jsonl"}
     }
   ]
 }

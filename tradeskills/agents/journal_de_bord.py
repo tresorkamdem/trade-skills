@@ -19,6 +19,13 @@ def enregistrer(trades: list[dict], chemin: str | Path) -> None:
     pd.DataFrame(trades, columns=COLONNES).to_csv(chemin, mode="a", header=not chemin.exists(), index=False)
 
 
+def stats_r(trades: pd.DataFrame | list[dict]) -> dict[str, float]:
+    """Statistiques en R (voir `journal.stats`) d'une liste de trades clos."""
+    df = pd.DataFrame(trades)
+    df["date"] = pd.to_datetime(df["date"])
+    return journal.stats(journal.prepare(df))
+
+
 def bilan(trades: pd.DataFrame | list[dict]) -> str:
     """Statistiques en R, par setup, et ce qu'il faut en conclure (ou pas encore)."""
     df = pd.DataFrame(trades)

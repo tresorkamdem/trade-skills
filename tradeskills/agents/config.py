@@ -4,7 +4,9 @@ Trois styles :
 - `swing` : cassure de Donchian dans une tendance (le système de `pine/systeme_tendance_strategie.pine`),
   barres journalières, positions tenues de quelques jours à quelques semaines ;
 - `day` : cassure du range d'ouverture au-dessus du VWAP, barres intraday, tout est fermé en fin de séance ;
-- `long_terme` : allocation GMV Ledoit-Wolf (la thèse), parité de risque ou 1/n, rééquilibrée chaque mois.
+- `long_terme` : allocation GMV Ledoit-Wolf (la thèse), parité de risque ou 1/n, rééquilibrée chaque mois ;
+- `signaux` : les entrées et sorties viennent de tes alertes TradingView (reçues par `node/webhook.mjs`),
+  barres journalières, avec les mêmes contrôles de budget et de risque que les autres poches.
 """
 from __future__ import annotations
 
@@ -12,7 +14,7 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
-STYLES = ("swing", "day", "long_terme")
+STYLES = ("swing", "day", "long_terme", "signaux")
 
 DEFAUTS: dict[str, dict] = {
     "swing": {
@@ -34,6 +36,11 @@ DEFAUTS: dict[str, dict] = {
     "long_terme": {
         "methode": "gmv_lw",  # gmv_lw, parite_risque ou egal
         "fenetre": 252,       # jours de rendements pour estimer la covariance
+    },
+    "signaux": {
+        "fichier": "node/signaux.jsonl",  # écrit par node/webhook.mjs
+        "atr": 14,
+        "atr_stop": 2.0,      # stop si l'alerte n'en donne pas (ou en donne un au-dessus du prix)
     },
 }
 

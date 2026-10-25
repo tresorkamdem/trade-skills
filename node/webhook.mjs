@@ -1,10 +1,13 @@
 // Serveur minimal sans dépendance : TradingView -> (webhook) -> ce serveur -> Telegram.
+// Chaque alerte avec un symbole est aussi ajoutée à `signaux.jsonl`, que la poche `signaux`
+// des agents Python lit pour trader ces alertes en papier (voir agents/README.md).
 //
 // Variables d'environnement :
 //   WEBHOOK_SECRET      jeton à mettre dans l'URL de l'alerte : https://<hôte>/alerte?cle=<jeton>
 //   TELEGRAM_BOT_TOKEN  jeton du bot (créé avec @BotFather)
 //   TELEGRAM_CHAT_ID    identifiant de la conversation qui reçoit les messages
 //   PORT                port d'écoute (3000 par défaut)
+//   SIGNAUX_FICHIER     fichier des signaux (signaux.jsonl par défaut)
 import { createServer } from 'node:http';
 import { appendFile } from 'node:fs/promises';
 
@@ -38,7 +41,22 @@ async function sendTelegram(text, { token, chatId, fetchImpl = fetch }) {
   if (!res.ok) throw new Error(`Telegram a répondu ${res.status}`);
 }
 
-export function createApp({ secret, token, chatId, logFile = 'alertes.log', fetchImpl = fetch }) {
+// Une ligne JSON par alerte exploitable : heure de réception (UTC) + champs de l'alerte.
+// Le symbole garde le format TradingView (`XETR:SXR8`) ; Python le traduit en code Yahoo.
+export function toSignal(alert, receivedAt = new Date()) {
+  if (alert.type === 'texte' || !alert.symbole) return null;
+  const { type, symbole, prix, stop, poche, strategie } = alert;
+  return { recu: receivedAt.toISOString(), type, symbole, prix, stop, poche, strategie };
+}
+
+export function createApp({
+  secret,
+  token,
+  chatId,
+  logFile = 'alertes.log',
+  signauxFile = 'signaux.jsonl',
+  fetchImpl = fetch,
+}) {
   return createServer(async (req, res) => {
     const url = new URL(req.url, 'http://localhost');
     if (req.method !== 'POST' || url.pathname !== '/alerte') {
@@ -60,7 +78,10 @@ export function createApp({ secret, token, chatId, logFile = 'alertes.log', fetc
     try {
       const alert = parseAlert(body);
       const text = formatMessage(alert);
-      await appendFile(logFile, `${new Date().toISOString()}\t${JSON.stringify(alert)}\n`);
+      const now = new Date();
+      await appendFile(logFile, `${now.toISOString()}\t${JSON.stringify(alert)}\n`);
+      const signal = toSignal(alert, now);
+      if (signal) await appendFile(signauxFile, `${JSON.stringify(signal)}\n`);
       if (token && chatId) await sendTelegram(text, { token, chatId, fetchImpl });
       res.writeHead(200, { 'content-type': 'text/plain' }).end('ok');
     } catch (err) {
@@ -75,5 +96,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     secret: process.env.WEBHOOK_SECRET,
     token: process.env.TELEGRAM_BOT_TOKEN,
     chatId: process.env.TELEGRAM_CHAT_ID,
+    signauxFile: process.env.SIGNAUX_FICHIER ?? 'signaux.jsonl',
   }).listen(port, () => console.log(`Webhook en écoute sur le port ${port}`));
 }

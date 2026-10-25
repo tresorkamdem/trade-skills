@@ -34,7 +34,7 @@ def test_config_rejects_unknown_style_and_params():
 
 def test_example_config_loads():
     conf = charger("agents/config.exemple.json")
-    assert {p.style for p in conf.poches} == {"swing", "day", "long_terme"}
+    assert {p.style for p in conf.poches} == {"swing", "day", "long_terme", "signaux"}
 
 
 def test_paper_broker_fills_at_next_open_with_costs_and_records_r():

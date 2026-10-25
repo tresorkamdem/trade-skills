@@ -18,8 +18,9 @@ Coche un module quand tu as fait tous ses exercices.
 | [ ] | [08 · Optimisation de portefeuille avancée](modules/08-optimisation-de-portefeuille/lecon.md) | 4 sem. | `optim` | Shrinkage non linéaire ; offre C1 v2 |
 | [ ] | [09 · Performance et reporting](modules/09-performance-et-reporting/lecon.md) | 2 sem. | `report` | Paquet « reporting » de MAÀT |
 | [ ] | [10 · Parcours pro](modules/10-parcours-pro/lecon.md) | 12 à 24 mois | | Plan de développement de MAÀT |
+| [ ] | [11 · Bourses africaines : BRVM et BVMAC](modules/11-bourses-africaines/lecon.md) | 3 sem. | `afrique` | Pilier D de MAÀT (diaspora, Afrique) |
 
-Ordre conseillé : 01 → 04 → 03 → 02 → 05 → 06 → 07 → 08 → 09, et le 10 en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
+Ordre conseillé : 01 → 04 → 03 → 02 → 05 → 06 → 07 → 08 → 09 → 11, et le 10 en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
 
 ## Structure
 
@@ -37,11 +38,13 @@ tradeskills/    package Python réutilisable
   validation.py   walk-forward, bootstrap, test de Sharpe, Deflated Sharpe
   optim.py        shrinkage non linéaire, long-only, tangent, parité de risque, Black-Litterman, CVaR
   report.py       alpha, bêta, information ratio, Brinson, rapport client
-  agents/         équipe d'agents de trading par poches (voir agents/README.md)
+  afrique.py      franc CFA, liquidité, cours figés et bêta de Dimson (BRVM, BVMAC)
+  agents/         équipe d'agents par poches, données réelles, tableau de bord (voir agents/README.md)
 agents/         configuration, documentation et comparatif des courtiers pour les agents
 journal/        modèle de journal de trading
 pine/           scripts TradingView (indicateur, stratégie, RSI)
-node/           serveur d'alertes TradingView vers Telegram
+node/           serveur d'alertes TradingView vers Telegram et la poche « signaux »
+suivi/          états, rapports et tableau de bord écrits chaque soir par GitHub Actions
 data/           10, 30 et 48 portefeuilles sectoriels de Kenneth French
 tests/          tests automatiques (Python et Node.js)
 ```
@@ -65,19 +68,23 @@ R = data.load_french_csv("data/10_Industry_Portfolios.csv", start=196901)
 print(portfolio.compare(R, window=60, cost_bps=20))
 ```
 
-## Équipe d'agents
+## Équipe d'agents et tableau de bord
 
-`tradeskills.agents` fait travailler une équipe d'agents (Scanner, Entrée, Sortie, Budget, Risque, Courtier papier, Time Machine, Alertes, Journal) sur plusieurs poches séparées : swing, day trading et long terme. Le backtest et le suivi quotidien utilisent le même moteur.
+`tradeskills.agents` fait travailler une équipe d'agents (Scanner, Entrée, Sortie, Budget, Risque, Courtier papier, Time Machine, Alertes, Journal, Signaux) sur plusieurs poches séparées : swing, day trading, long terme et tes alertes TradingView. Le backtest et le suivi quotidien utilisent le même moteur.
 
 ```bash
-python -m tradeskills.agents backtest --source simulee
+pip install -e ".[donnees]"
+python -m tradeskills.agents actualiser                              # cours réels (Yahoo) dans donnees/marche/
+python -m tradeskills.agents backtest --source cache:donnees/marche  # Time Machine sur ces cours
+python -m tradeskills.agents quotidien --source cache:donnees/marche # passage du soir, en papier
+python -m tradeskills.agents tableau --source cache:donnees/marche   # agents/tableau.html
 ```
 
-Détails dans [agents/README.md](agents/README.md), et [quel courtier ouvrir](agents/courtiers.md).
+Un workflow GitHub Actions fait tout cela chaque soir de semaine et publie le résultat dans `suivi/`. Détails dans [agents/README.md](agents/README.md), et [quel courtier ouvrir](agents/courtiers.md).
 
 ## Données
 
-Aucune donnée de marché en temps réel n'est incluse. Les exercices utilisent les données de Kenneth French (fournies), des cours simulés (`data.synthetic_ohlcv`) et tes propres exports TradingView (`data.load_ohlcv_csv`).
+Les cours réels viennent de Yahoo Finance (`actualiser`, usage personnel, cache local hors de Git). Les exercices utilisent aussi les données de Kenneth French (fournies), des cours simulés (`data.synthetic_ohlcv`) et tes propres exports TradingView (`data.load_ohlcv_csv`).
 
 ## Liens
 
