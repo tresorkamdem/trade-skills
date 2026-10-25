@@ -2,7 +2,7 @@ name: passage quotidien
 
 # Chaque soir de semaine après la clôture américaine : actualise les cours (Yahoo), fait
 # avancer les poches papier, refait le backtest et le tableau de bord, puis enregistre
-# le tout dans suivi/. Lancement à la main : onglet Actions → passage quotidien → Run workflow.
+# le tout dans suivi/, et l'envoie à SESHAT si c'est configuré. Lancement à la main : onglet Actions → passage quotidien → Run workflow.
 on:
   schedule:
     - cron: "30 22 * * 1-5"
@@ -53,6 +53,14 @@ jobs:
           python -m tradeskills.agents tableau  --config "$CONFIG" --source cache:donnees/marche --dossier suivi
         env:
           CONFIG: ${{ hashFiles('agents/config.json') != '' && 'agents/config.json' || 'agents/config.exemple.json' }}
+      # Envoi vers la section Trading de SESHAT (seulement si les trois secrets existent)
+      - name: Envoyer à SESHAT
+        run: python -m tradeskills.agents publier --config "$CONFIG" --source cache:donnees/marche --dossier suivi
+        env:
+          CONFIG: ${{ hashFiles('agents/config.json') != '' && 'agents/config.json' || 'agents/config.exemple.json' }}
+          SESHAT_SUPABASE_URL: ${{ secrets.SESHAT_SUPABASE_URL }}
+          SESHAT_SUPABASE_ANON_KEY: ${{ secrets.SESHAT_SUPABASE_ANON_KEY }}
+          SESHAT_ROBOT_TOKEN: ${{ secrets.SESHAT_ROBOT_TOKEN }}
 
       - name: Enregistrer le suivi
         run: |

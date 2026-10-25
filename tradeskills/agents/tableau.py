@@ -14,11 +14,9 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
-from .. import optim, portfolio
-from . import budget, signaux
+from . import instantane, signaux
 from .config import Config, Poche
 
 COULEURS = ["--c1", "--c2", "--c3", "--c4", "--c5"]
@@ -114,39 +112,17 @@ def _allocation(poche: Poche, source, etat: dict | None) -> str:
     donnees = source.historique(poche.univers, "long_terme")
     if not donnees:
         return ""
-    closes = pd.DataFrame({s: df["close"] for s, df in donnees.items()}).sort_index().ffill()
-    R = closes.pct_change().iloc[1:].tail(poche.param("fenetre")).dropna(axis=1)
-    if len(R) < 30:
+    a = instantane.allocation(poche, donnees, etat)
+    if a is None:
         return _section(f"Allocation · {poche.nom}", '<p class="vide">Pas assez d\'historique.</p>')
-    sigma = portfolio.cov_ledoit_wolf(R.to_numpy())
-    methodes = {}
-    for nom, m in [("GMV Ledoit-Wolf", "gmv_lw"), ("Parité de risque", "parite_risque"), ("1/n", "egal")]:
-        p = Poche(poche.nom, "long_terme", poche.capital, list(R.columns), poids_max=poche.poids_max,
-                  params={"methode": m})
-        methodes[nom] = budget.poids_cibles(R, p)
-    if etat:
-        prix, pos = etat["dernier_prix"], etat["courtier"]["positions"]
-        montants = pd.Series({s: pos[s]["quantite"] * prix.get(s, 0.0) for s in pos}, dtype=float)
-        actuel = (montants / _valeur(etat)).reindex(R.columns).fillna(0.0)
-        methodes = {"Poche actuelle": actuel, **methodes}
-
-    tete = "<tr><th>Ligne</th>" + "".join(f"<th>{_e(n)}</th>" for n in methodes) + "</tr>"
-    corps = []
-    for s in R.columns:
-        cellules = "".join(f"<td>{_barre(w[s])}</td>" for w in methodes.values())
-        corps.append(f"<tr><td>{_e(s)}</td>{cellules}</tr>")
-
-    def vol(w):
-        w = w.to_numpy()
-        return np.sqrt(w @ sigma @ w * 252) if w.sum() > 0 else 0.0
-
-    def rc_max(w):
-        w = w.to_numpy()
-        return optim.risk_contributions(w, sigma).max() if w.sum() > 0 else 0.0
-
-    corps.append("<tr class='pied'><td>Volatilité attendue</td>" + "".join(f"<td>{vol(w):.1%}</td>" for w in methodes.values()) + "</tr>")
-    corps.append("<tr class='pied'><td>Plus grosse part du risque</td>" + "".join(f"<td>{rc_max(w):.0%}</td>" for w in methodes.values()) + "</tr>")
-    note = (f"<p class='petit'>Covariance Ledoit-Wolf sur les {len(R)} derniers jours, poids plafonnés à {poche.poids_max:.0%}. "
+    noms = {"actuel": "Poche actuelle", "gmv_lw": "GMV Ledoit-Wolf", "parite_risque": "Parité de risque", "egal": "1/n"}
+    tete = "<tr><th>Ligne</th>" + "".join(f"<th>{_e(noms[m['nom']])}</th>" for m in a["methodes"]) + "</tr>"
+    corps = [f"<tr><td>{_e(s)}</td>" + "".join(f"<td>{_barre(m['poids'][i])}</td>" for m in a["methodes"]) + "</tr>"
+             for i, s in enumerate(a["lignes"])]
+    corps.append("<tr class='pied'><td>Volatilité attendue</td>" + "".join(f"<td>{m['vol']:.1%}</td>" for m in a["methodes"]) + "</tr>")
+    corps.append("<tr class='pied'><td>Plus grosse part du risque</td>"
+                 + "".join(f"<td>{m['part_risque_max']:.0%}</td>" for m in a["methodes"]) + "</tr>")
+    note = (f"<p class='petit'>Covariance Ledoit-Wolf sur les {a['fenetre']} derniers jours, poids plafonnés à {poche.poids_max:.0%}. "
             "GMV minimise la volatilité ; la parité de risque égalise la part de risque de chaque ligne ; "
             "1/n est la référence qui, dans ta thèse, restait compétitive en Sharpe.</p>")
     return _section(f"Allocation · {poche.nom}", f"<div class='defile'><table>{tete}{''.join(corps)}</table></div>{note}")
@@ -271,8 +247,7 @@ def _fmt(cle: str, v) -> str:
 
 
 def _valeur(etat: dict) -> float:
-    c, prix = etat["courtier"], etat["dernier_prix"]
-    return c["cash"] + sum(p["quantite"] * prix.get(s, p["prix_entree"]) for s, p in c["positions"].items())
+    return instantane.valeur(etat)
 
 
 def _signe(x: float) -> str:

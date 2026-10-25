@@ -151,3 +151,49 @@ def test_cli_actualiser_uses_yahoo_and_writes_report(tmp_path, monkeypatch):
     main(["actualiser", "--donnees", str(tmp_path / "cache"), "--dossier", str(tmp_path)])
     assert sorted(p.name for p in (tmp_path / "cache").iterdir()) == ["X.csv", "Y.csv", "Z.csv"]
     assert "| Y | jour | 100 | 100 |" in (tmp_path / "rapports" / "donnees.md").read_text()
+
+
+def test_snapshot_is_strict_json_and_publish_calls_trading_ingest(tmp_path, monkeypatch):
+    from tradeskills.agents import instantane
+
+    conf = Config([Poche("lt", "long_terme", 20_000, ["A", "B", "C"], poids_max=0.5),
+                   Poche("sw", "swing", 10_000, ["A", "B", "C", "D"])])
+    src = marche.SourceSimulee(n_jours=600, seed=1)
+    vide = instantane.construire(conf, tmp_path, src)
+    assert [p["lancee"] for p in vide["poches"]] == [False, False] and vide["positions"] == []
+    from tradeskills.agents import orchestre
+    orchestre.passage(conf, src, tmp_path, envoyer=False)
+    inst = instantane.construire(conf, tmp_path, src)
+    texte = json.dumps(inst, allow_nan=False)  # pas de NaN ni d'infini : JSON valide pour Postgres
+    assert inst["version"] == 1 and len(texte) < 1_000_000
+    lt = inst["poches"][0]
+    assert lt["lancee"] and lt["courbe"][-1][1] == pytest.approx(lt["valeur"], rel=1e-6)
+    alloc = inst["allocation"][0]
+    assert [m["nom"] for m in alloc["methodes"]] == ["actuel", "gmv_lw", "parite_risque", "egal"]
+    for m in alloc["methodes"][1:]:
+        assert sum(m["poids"]) == pytest.approx(1, abs=1e-3)
+
+    envois = []
+
+    class Reponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return b'"0b5c0f6e-0000-0000-0000-000000000001"'
+
+    def faux_urlopen(req, timeout):
+        envois.append((req.full_url, dict(req.header_items()), json.loads(req.data)))
+        return Reponse()
+
+    monkeypatch.setattr("urllib.request.urlopen", faux_urlopen)
+    rid = instantane.publier(inst, "https://xyz.supabase.co/", "anon-key", "jeton")
+    assert rid.startswith("0b5c0f6e")
+    url, entetes, corps = envois[0]
+    assert url == "https://xyz.supabase.co/rest/v1/rpc/trading_ingest"
+    assert entetes["Apikey"] == "anon-key" and corps["p_token"] == "jeton" and corps["p_payload"]["version"] == 1
+    with pytest.raises(RuntimeError):
+        instantane.publier(inst, "", "", "")
