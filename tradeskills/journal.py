@@ -14,7 +14,12 @@ COLUMNS = ["date", "actif", "sens", "setup", "entree", "stop", "sortie", "quanti
 
 
 def load(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
+    return prepare(pd.read_csv(path, parse_dates=["date"]))
+
+
+def prepare(df: pd.DataFrame) -> pd.DataFrame:
+    """Ajoute les colonnes `pnl` et `r` à un journal déjà chargé (par ex. celui de l'agent Journal)."""
+    df = df.copy()
     missing = set(COLUMNS) - set(df.columns)
     if missing:
         raise ValueError(f"Colonnes manquantes : {sorted(missing)}")
