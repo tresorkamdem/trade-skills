@@ -1,0 +1,68 @@
+name: passage quotidien
+
+# Chaque soir de semaine après la clôture américaine : actualise les cours (Yahoo), fait
+# avancer les poches papier, refait le backtest et le tableau de bord, puis enregistre
+# le tout dans suivi/. Lancement à la main : onglet Actions → passage quotidien → Run workflow.
+on:
+  schedule:
+    - cron: "30 22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: passage-quotidien
+  cancel-in-progress: false
+
+jobs:
+  passage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[donnees]"
+
+      # Les cours Yahoo restent dans le cache d'Actions (non publiés dans le dépôt public)
+      - uses: actions/cache/restore@v4
+        with:
+          path: donnees/marche
+          key: marche-${{ github.run_id }}
+          restore-keys: marche-
+      - name: Actualiser les cours
+        run: python -m tradeskills.agents actualiser --config "$CONFIG" --donnees donnees/marche --dossier suivi
+        env:
+          CONFIG: ${{ hashFiles('agents/config.json') != '' && 'agents/config.json' || 'agents/config.exemple.json' }}
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: donnees/marche
+          key: marche-${{ github.run_id }}
+
+      - name: Passage quotidien des poches
+        run: python -m tradeskills.agents quotidien --config "$CONFIG" --source cache:donnees/marche --dossier suivi
+        env:
+          CONFIG: ${{ hashFiles('agents/config.json') != '' && 'agents/config.json' || 'agents/config.exemple.json' }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      - name: Backtest et tableau de bord
+        run: |
+          python -m tradeskills.agents backtest --config "$CONFIG" --source cache:donnees/marche --dossier suivi > /dev/null
+          python -m tradeskills.agents tableau  --config "$CONFIG" --source cache:donnees/marche --dossier suivi
+        env:
+          CONFIG: ${{ hashFiles('agents/config.json') != '' && 'agents/config.json' || 'agents/config.exemple.json' }}
+
+      - name: Enregistrer le suivi
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f suivi
+          git diff --cached --quiet && exit 0
+          git commit -m "Suivi du $(date +%Y-%m-%d) [skip ci]"
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tableau-de-bord
+          path: suivi/tableau.html

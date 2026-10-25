@@ -40,8 +40,13 @@ def cov_nonlinear_shrinkage(window: np.ndarray) -> np.ndarray:
 
 
 def gmv_long_only(sigma: np.ndarray, max_weight: float = 1.0) -> np.ndarray:
-    """Variance minimale sans vente à découvert, poids plafonnés à `max_weight`."""
+    """Variance minimale sans vente à découvert, poids plafonnés à `max_weight`.
+
+    La covariance est d'abord ramenée à une variance moyenne de 1 : sur des rendements
+    journaliers (variances de l'ordre de 1e-4), l'optimiseur s'arrêterait sinon dès le
+    point de départ 1/n, sa tolérance étant plus grande que les écarts de variance."""
     n = sigma.shape[0]
+    sigma = sigma / np.mean(np.diag(sigma))
     res = minimize(
         lambda w: w @ sigma @ w,
         np.ones(n) / n,

@@ -8,3 +8,8 @@ node_modules/
 rapports/
 agents/etat/
 agents/rapports/
+donnees/marche/
+node/signaux.jsonl
+node/alertes.log
+alertes.log
+agents/tableau.html

@@ -142,3 +142,32 @@ def test_dcf_matches_closed_form_without_growth_phase():
     assert fundamentals.dcf(100, 0.0, 1, 0.10, 0.0) == pytest.approx(100 / 1.1 + 100 / 0.10 / 1.1)
     with pytest.raises(ValueError):
         fundamentals.dcf(100, 0.05, 5, 0.02, 0.03)
+
+
+def test_gmv_long_only_works_on_daily_scale_covariances():
+    rng = np.random.default_rng(0)
+    X = rng.normal(0, 0.01, (500, 4)) * np.array([0.5, 1, 1.5, 2])  # volatilités journalières différentes
+    S = np.cov(X, rowvar=False)
+    w = optim.gmv_long_only(S)
+    assert w[0] > 0.5 and w[0] > w[1] > w[2] > w[3]
+    np.testing.assert_allclose(w, optim.gmv_long_only(S * 1e4), atol=1e-4)
+
+
+def test_afrique_stale_prices_hide_beta_and_dimson_recovers_it():
+    from tradeskills import afrique
+
+    rng = np.random.default_rng(0)
+    marche = data.synthetic_ohlcv(1_500, seed=1)
+    titre = marche.copy()
+    titre["close"] = marche["close"] * np.exp(np.cumsum(rng.normal(0, 0.008, len(marche))))
+    fige = afrique.cotations_figees(titre, proba_echange=1 / 3, seed=2)
+    rm, rf = marche["close"].pct_change(), fige["close"].pct_change()
+    assert afrique.beta_simple(rf, rm) < 0.5
+    assert afrique.beta_dimson(rf, rm, 5) == pytest.approx(1, abs=0.15)
+    liq = afrique.liquidite(fige)
+    assert liq["jours_sans_echange"] == pytest.approx(2 / 3, abs=0.05)
+    assert afrique.liquidite(titre)["jours_sans_echange"] == 0
+    assert afrique.vers_eur(655_957) == pytest.approx(1_000)
+    bloque = titre.copy()
+    bloque.iloc[100:103, bloque.columns.get_loc("close")] = bloque["close"].iloc[99] * 1.075 ** np.arange(1, 4)
+    assert afrique.jours_a_la_limite(bloque) >= 3

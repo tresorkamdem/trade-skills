@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from . import alertes, journal_de_bord, risque
+from . import alertes, journal_de_bord, risque, signaux
 from .config import Config
 from .moteur import Moteur
 
@@ -27,7 +27,7 @@ def passage(config: Config, source, dossier: str | Path = "agents", envoyer: boo
         etat = json.loads(chemin_etat.read_text(encoding="utf-8")) if chemin_etat.exists() else None
         m = Moteur(poche, etat)
         n_mouv, n_trades, n_refus = len(m.courtier.mouvements), len(m.courtier.trades), 0
-        m.charger(source.historique(poche.univers, poche.style))
+        m.charger(source.historique(poche.univers, poche.style), signaux.de_la_poche(poche))
         m.executer()
 
         nouveaux = m.courtier.mouvements[n_mouv:]

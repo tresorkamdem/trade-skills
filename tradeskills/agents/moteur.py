@@ -9,7 +9,8 @@ tourne en papier.
 1. Courtier : exécute à l'ouverture les ordres décidés en t-1, puis vérifie stops et objectifs.
 2. Sortie : remonte les stops suiveurs, décide les sorties (day : immédiatement à la clôture).
 3. Scanner → Entrée → Budget → Risque : nouveaux ordres pour l'ouverture de t+1.
-   (Long terme : rééquilibrage vers les poids cibles le premier jour de chaque mois.)
+   (Long terme : rééquilibrage vers les poids cibles le premier jour de chaque mois.
+   Signaux : les alertes TradingView reçues depuis la barre précédente remplacent Scanner et Entrée.)
 """
 from __future__ import annotations
 
@@ -17,7 +18,7 @@ import math
 
 import pandas as pd
 
-from . import budget, entree_sortie, risque, scanner
+from . import budget, entree_sortie, risque, scanner, signaux as sig
 from .config import Poche
 from .courtier import CourtierPapier, Ordre
 
@@ -38,8 +39,10 @@ class Moteur:
         self.refus: list[dict] = []
 
     # --- données ------------------------------------------------------------
-    def charger(self, donnees: dict[str, pd.DataFrame]) -> None:
+    def charger(self, donnees: dict[str, pd.DataFrame], signaux: pd.DataFrame | None = None) -> None:
         self.donnees = donnees
+        self.signaux = sig.pour_poche(signaux if signaux is not None else pd.DataFrame(columns=sig.COLONNES),
+                                      self.poche.nom)
         self.lignes = {s: scanner.preparer(df, self.poche) for s, df in donnees.items()}
         self.closes = pd.DataFrame({s: df["close"] for s, df in donnees.items()}).sort_index()
         # Accès rapide aux barres : {date: {symbole: ligne}}
@@ -69,6 +72,8 @@ class Moteur:
         if poche.style == "long_terme":
             if self.derniere_date is None or t.to_period("M") != self.derniere_date.to_period("M"):
                 self._reequilibrer(t)
+        elif poche.style == "signaux":
+            self._signaux(t, barres)
         else:
             self._sorties(t, barres)
             self._entrees(t, barres)
@@ -99,7 +104,11 @@ class Moteur:
             exclus |= {m["symbole"] for m in c.mouvements if m["date"][:10] == jour}
         lignes = {s: pd.Series(b) for s, b in barres.items()}
         props = [entree_sortie.entree(lignes[s], s, poche) for s in scanner.scanner(lignes, poche, exclus)]
-        props = [p for p in props if p is not None]
+        self._soumettre(t, [p for p in props if p is not None])
+
+    def _soumettre(self, t, props: list[entree_sortie.Proposition]) -> None:
+        """Budget puis Risque, et ordres pour l'ouverture suivante."""
+        c, poche = self.courtier, self.poche
         if not props:
             return
         valeur = c.valeur(self.dernier_prix)
@@ -111,6 +120,31 @@ class Moteur:
         for p, q in acceptes:
             c.passer(Ordre(p.symbole, q, "entree", p.stop, p.objectif, p.setup, risque_max=(p.prix - p.stop) * q))
         self.refus += [{"date": str(t), "symbole": s, "raison": r} for s, r in refus]
+
+    def _signaux(self, t, barres) -> None:
+        """Alertes TradingView reçues depuis la barre précédente : sorties d'abord, puis entrées."""
+        c, poche = self.courtier, self.poche
+        recus = sig.entre(self.signaux, self.derniere_date, t)
+        for s in recus.loc[recus["type"] == "sortie", "symbole"].unique():
+            if s in c.positions and not c.en_attente(s):
+                c.passer(Ordre(s, -c.positions[s].quantite, "sortie_signal"))
+        props, vus = [], set(c.positions) | {o.symbole for o in c.ordres}
+        for a in recus[recus["type"] == "achat"].itertuples():
+            if a.symbole in vus:
+                continue
+            vus.add(a.symbole)
+            if a.symbole not in barres:
+                self.refus.append({"date": str(t), "symbole": a.symbole, "raison": "hors univers ou sans cours"})
+                continue
+            b = barres[a.symbole]
+            stop = a.stop if a.stop is not None and a.stop < b["close"] else None
+            if stop is None and not pd.isna(b["atr"]):
+                stop = b["close"] - poche.param("atr_stop") * b["atr"]
+            if stop is None:
+                self.refus.append({"date": str(t), "symbole": a.symbole, "raison": "pas de stop (historique trop court)"})
+                continue
+            props.append(entree_sortie.Proposition(a.symbole, a.strategie, b["close"], stop))
+        self._soumettre(t, props)
 
     def _drawdown(self, t, valeur: float) -> float:
         """Baisse depuis le plus haut ; après `pause_jours` de coupe-circuit, le plus haut repart de la valeur actuelle."""

@@ -32,6 +32,27 @@ class Resultat:
             "reference_1/n": metrics.summary(b, periods=252),
         })
 
+    def vers_dict(self) -> dict:
+        """Résumé sérialisable en JSON, lu par le tableau de bord."""
+        bas, haut = validation.bootstrap_sharpe_ci(self.rendements, periods=252, n=1_000)
+        courbe = journalier(self.courbe)
+        reference = self.poche.capital * (1 + self.reference.reindex(courbe.index).fillna(0)).cumprod()
+        nb, res = len(self.trades), self.resume()
+        return {
+            "nom": self.poche.nom,
+            "style": self.poche.style,
+            "capital": self.poche.capital,
+            "debut": f"{courbe.index[0]:%Y-%m-%d}",
+            "fin": f"{courbe.index[-1]:%Y-%m-%d}",
+            "valeur_finale": float(courbe.iloc[-1]),
+            "resume": {k: {c: _propre(v[c]) for c in res.columns} for k, v in res.iterrows()},
+            "sharpe_ic": [_propre(bas), _propre(haut)],
+            "trades": nb,
+            "esperance_R": _propre(journal_de_bord.stats_r(self.trades)["esperance_R"]) if nb else None,
+            "courbe": [[f"{t:%Y-%m-%d}", round(float(v), 2)] for t, v in courbe.items()],
+            "reference": [[f"{t:%Y-%m-%d}", round(float(v), 2)] for t, v in reference.items()],
+        }
+
     def texte(self) -> str:
         bas, haut = validation.bootstrap_sharpe_ci(self.rendements, periods=252, n=1_000)
         res = self.resume()
@@ -55,6 +76,11 @@ class Resultat:
         return "\n".join(lignes)
 
 
+def _propre(x) -> float | None:
+    x = float(x)
+    return x if np.isfinite(x) else None
+
+
 def _intervalle(bas: float, haut: float) -> str:
     if not (np.isfinite(bas) and np.isfinite(haut)):
         return "Sharpe : trop peu de jours de données pour un intervalle de confiance."
@@ -67,9 +93,9 @@ def journalier(serie: pd.Series) -> pd.Series:
     return serie.groupby(serie.index.normalize()).last()
 
 
-def rejouer(poche: Poche, donnees: dict[str, pd.DataFrame], jusqua=None) -> Resultat:
+def rejouer(poche: Poche, donnees: dict[str, pd.DataFrame], jusqua=None, signaux: pd.DataFrame | None = None) -> Resultat:
     m = Moteur(poche)
-    m.charger(donnees)
+    m.charger(donnees, signaux)
     m.executer(jusqua)
     courbe = m.courbe()
     rendements = journalier(courbe).pct_change().dropna()

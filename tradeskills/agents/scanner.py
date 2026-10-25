@@ -17,7 +17,10 @@ def preparer(df: pd.DataFrame, poche: Poche) -> pd.DataFrame:
     close = df["close"]
     out = df[["open", "high", "low", "close"]].copy()
 
-    if poche.style == "swing":
+    if poche.style == "signaux":
+        out["atr"] = ind.atr(df, p("atr"))
+
+    elif poche.style == "swing":
         out["atr"] = ind.atr(df, p("atr"))
         out["tendance"] = ind.sma(close, p("tendance"))
         out["haut_entree"] = ind.donchian(df, p("entree"))["haut"]

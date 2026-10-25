@@ -25,9 +25,10 @@ plot(lower, "Plus bas sortie", color = color.new(color.red, 40))
 plotshape(signalAchat, "Achat", shape.triangleup, location.belowbar, color.green, size = size.small)
 plotshape(signalSortie, "Sortie", shape.xcross, location.abovebar, color.red, size = size.tiny)
 
-// Message JSON lu par le serveur Node.js (node/webhook.mjs)
-alertcondition(signalAchat, "Achat", '{"type":"achat","symbole":"{{ticker}}","prix":{{close}},"unite":"{{interval}}"}')
-alertcondition(signalSortie, "Sortie", '{"type":"sortie","symbole":"{{ticker}}","prix":{{close}},"unite":"{{interval}}"}')
+// Message JSON lu par le serveur Node.js (node/webhook.mjs), puis par la poche « signaux » des agents.
+// Le symbole garde la bourse (XETR:SXR8) pour être traduit en code Yahoo (SXR8.DE).
+alertcondition(signalAchat, "Achat", '{"type":"achat","symbole":"{{exchange}}:{{ticker}}","prix":{{close}},"unite":"{{interval}}","strategie":"systeme_tendance"}')
+alertcondition(signalSortie, "Sortie", '{"type":"sortie","symbole":"{{exchange}}:{{ticker}}","prix":{{close}},"unite":"{{interval}}","strategie":"systeme_tendance"}')
 
 if signalAchat
-    alert('{"type":"achat","symbole":"' + syminfo.ticker + '","prix":' + str.tostring(close) + ',"stop":' + str.tostring(stop, format.mintick) + '}', alert.freq_once_per_bar_close)
+    alert('{"type":"achat","symbole":"' + syminfo.prefix + ':' + syminfo.ticker + '","prix":' + str.tostring(close) + ',"stop":' + str.tostring(stop, format.mintick) + ',"strategie":"systeme_tendance"}', alert.freq_once_per_bar_close)
