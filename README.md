@@ -37,6 +37,8 @@ tradeskills/    package Python réutilisable
   validation.py   walk-forward, bootstrap, test de Sharpe, Deflated Sharpe
   optim.py        shrinkage non linéaire, long-only, tangent, parité de risque, Black-Litterman, CVaR
   report.py       alpha, bêta, information ratio, Brinson, rapport client
+  agents/         équipe d'agents de trading par poches (voir agents/README.md)
+agents/         configuration, documentation et comparatif des courtiers pour les agents
 journal/        modèle de journal de trading
 pine/           scripts TradingView (indicateur, stratégie, RSI)
 node/           serveur d'alertes TradingView vers Telegram
@@ -62,6 +64,16 @@ from tradeskills import data, portfolio
 R = data.load_french_csv("data/10_Industry_Portfolios.csv", start=196901)
 print(portfolio.compare(R, window=60, cost_bps=20))
 ```
+
+## Équipe d'agents
+
+`tradeskills.agents` fait travailler une équipe d'agents (Scanner, Entrée, Sortie, Budget, Risque, Courtier papier, Time Machine, Alertes, Journal) sur plusieurs poches séparées : swing, day trading et long terme. Le backtest et le suivi quotidien utilisent le même moteur.
+
+```bash
+python -m tradeskills.agents backtest --source simulee
+```
+
+Détails dans [agents/README.md](agents/README.md), et [quel courtier ouvrir](agents/courtiers.md).
 
 ## Données
 

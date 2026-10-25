@@ -1,0 +1,34 @@
+{
+  "poches": [
+    {
+      "nom": "swing",
+      "style": "swing",
+      "capital": 10000,
+      "univers": ["SXR8.DE", "SXRV.DE", "EUNL.DE", "EXS1.DE", "IS3N.DE", "4GLD.DE",
+                  "AAPL", "MSFT", "NVDA", "AMZN", "SAP.DE", "SIE.DE", "ALV.DE"],
+      "risque_par_trade": 0.01,
+      "max_positions": 5,
+      "poids_max": 0.25
+    },
+    {
+      "nom": "day",
+      "style": "day",
+      "capital": 5000,
+      "univers": ["AAPL", "MSFT", "NVDA", "AMD"],
+      "risque_par_trade": 0.005,
+      "max_positions": 2,
+      "poids_max": 0.5,
+      "risque_total_max": 0.01,
+      "drawdown_max": 0.05
+    },
+    {
+      "nom": "long_terme",
+      "style": "long_terme",
+      "capital": 20000,
+      "univers": ["EUNL.DE", "IS3N.DE", "EXS1.DE", "EUNH.DE", "4GLD.DE"],
+      "poids_max": 0.4,
+      "cout_bps": 10,
+      "params": {"methode": "gmv_lw", "fenetre": 252}
+    }
+  ]
+}
