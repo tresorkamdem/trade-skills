@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tradeskills"
+version = "0.1.0"
+description = "Parcours d'apprentissage : analyse financière appliquée au trading et à la gestion de portefeuille"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scikit-learn", "matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["tradeskills"]

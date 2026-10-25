@@ -1,0 +1,5 @@
+date,actif,sens,setup,entree,stop,sortie,quantite,frais,note
+2026-11-02,SPY,achat,cassure,580.0,575.0,590.0,10,2.0,Cassure du plus haut de 20 jours avec volume
+2026-11-04,QQQ,achat,rebond_mm50,500.0,494.0,494.0,8,2.0,Stop touché : marché faible le jour même
+2026-11-06,GLD,vente,cassure,245.0,248.0,239.0,20,2.0,Vente sous le support
+2026-11-10,SPY,achat,rebond_mm50,585.0,580.0,582.0,10,2.0,Sortie manuelle avant annonce de la Fed
