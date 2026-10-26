@@ -46,7 +46,7 @@ Le tableau de bord est aussi téléchargeable dans l'onglet **Actions**, en bas 
 | `suivi/tableau.html` | Le tableau de bord |
 
 ::: attention
-Le dépôt est **public** : ton suivi papier est visible de tous. C'est très bien pour une vitrine (module 10), mais ne mets jamais d'informations personnelles ni, plus tard, de positions réelles dans ce dépôt. Les jetons (Telegram, SESHAT) sont dans les **secrets** GitHub, jamais dans le code.
+Le dépôt est **public** : ton suivi papier est visible de tous. C'est très bien pour une vitrine (module 12), mais ne mets jamais d'informations personnelles ni, plus tard, de positions réelles dans ce dépôt. Les jetons (Telegram, SESHAT) sont dans les **secrets** GitHub, jamais dans le code.
 :::
 
 # Lire ce que disent tes agents {#lire data-num="Partie IV"}

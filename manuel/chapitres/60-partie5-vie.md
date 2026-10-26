@@ -146,7 +146,7 @@ La règle la plus utile de toute cette partie : **on ne change une règle qu'à 
 ## Quand ça va mal (série de pertes, forte baisse)
 
 <ul class="check">
-<li>Je relis la section 5 du module 04 : les séries de pertes sont normales</li>
+<li>Je relis la section 5 du module 02 : les séries de pertes sont normales</li>
 <li>La baisse est-elle dans ce que la Time Machine montrait ? Si oui : rien à changer</li>
 <li>Le coupe-circuit s'est-il déclenché ? Si oui : il fait son travail, pas d'entrée forcée</li>
 <li>Je n'augmente pas la taille pour rattraper ; je ne déplace aucun stop</li>
@@ -177,7 +177,7 @@ Une poche (ou Or-1) ne passe en réel que si **tous** ces critères sont remplis
 5. **Montée par paliers** : risque 0,75 %, puis 1 %, puis davantage de capital, à chaque fois après une série de 50 trades à espérance positive.
 
 ::: attention
-**Ce qui reste interdit, même en réel** : levier, martingale, moyenne à la baisse, déplacement d'un stop contre toi, changement de règle en dehors de la revue trimestrielle, et partage de tes signaux avec d'autres personnes (module 10). Et souviens-toi des offres vues sur les réseaux sociaux (« robot or, de 1 000 à 20 000 € ») : un courtier offshore, une démo, une martingale.
+**Ce qui reste interdit, même en réel** : levier, martingale, moyenne à la baisse, déplacement d'un stop contre toi, changement de règle en dehors de la revue trimestrielle, et partage de tes signaux avec d'autres personnes (module 12). Et souviens-toi des offres vues sur les réseaux sociaux (« robot or, de 1 000 à 20 000 € ») : un courtier offshore, une démo, une martingale.
 :::
 
 ## 11. À quoi ressemble la réussite

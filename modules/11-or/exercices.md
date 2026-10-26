@@ -1,6 +1,6 @@
-# Module 12 · Exercices
+# Module 11 · Exercices
 
-Solutions des exercices 4 à 8 : `python modules/12-or/solutions/solutions_12.py`. Les exercices 1 à 3 se font sur TradingView : écris tes réponses dans ton journal, on les relira ensemble.
+Solutions des exercices 4 à 8 : `python modules/11-or/solutions/solutions_11.py`. Les exercices 1 à 3 se font sur TradingView : écris tes réponses dans ton journal, on les relira ensemble.
 
 ## Sur TradingView (graphique journalier)
 

@@ -1,4 +1,4 @@
-"""Solutions du module 04."""
+"""Solutions du module 02."""
 import numpy as np
 
 from tradeskills.risk import (expectancy, kelly_fraction, max_drawdowns, position_size,

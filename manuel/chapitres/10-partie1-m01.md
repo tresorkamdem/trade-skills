@@ -69,7 +69,7 @@ Deux phrases à apprendre par cœur :
 
 Un **gap** est un saut de prix entre la clôture d'une séance et l'ouverture de la suivante, en général après une nouvelle tombée la nuit (résultats, décision politique). Ton ordre stop à 47 € ne te protège pas d'une ouverture à 42 € : il devient un ordre au marché dès que le prix touche ou dépasse 47, et le premier prix disponible est 42. Le stop limite la perte **dans des conditions normales** ; il ne la garantit pas.
 
-Règle de base : **chaque position a un stop défini avant l'entrée**. Le module 04 explique comment le placer et comment en déduire la taille de la position.
+Règle de base : **chaque position a un stop défini avant l'entrée**. Le module 02 explique comment le placer et comment en déduire la taille de la position.
 
 ## 4. Les classes d'actifs
 
@@ -80,7 +80,7 @@ Règle de base : **chaque position a un stop défini avant l'entrée**. Le modul
 | Indices (CFD, futures) | DAX, S&P 500 | Presque 24 h/24 | Levier, contrats standardisés |
 | Forex | EUR/USD, EUR/XAF | 24 h/24 en semaine | Levier élevé, influencé par les banques centrales. Le XAF est arrimé à l'euro |
 | Crypto | BTC, ETH | 24 h/24, 7 j/7 | Très volatil, risque de plateforme |
-| Matières premières | Or (4GLD), pétrole | Variable | Saisonnalité, géopolitique (module 12 pour l'or) |
+| Matières premières | Or (4GLD), pétrole | Variable | Saisonnalité, géopolitique (module 11 pour l'or) |
 
 ::: attention
 **Les ETF américains (SPY, QQQ…) ne s'achètent pas depuis un compte allemand** : il leur manque le document d'information clé (KID, règlement PRIIPs) exigé dans l'Union européenne. Tu utiliseras leurs équivalents **UCITS** cotés sur Xetra : SXR8 pour le S&P 500, SXRV pour le Nasdaq 100, EUNL pour le MSCI World. C'est pour cela que tes poches tradent ces codes-là. Sur TradingView, tu peux bien sûr *regarder* SPY.
@@ -111,7 +111,7 @@ Le **levier** permet de contrôler une position plus grande que ton capital. Ave
 
 La **marge** est l'argent bloqué chez le courtier pour garantir la position. Quand la perte la dépasse, le courtier te demande de remettre de l'argent (**appel de marge**) ou ferme la position automatiquement, au pire moment.
 
-Pour l'instant : **pas de levier**. Le module 12 montre sur l'or ce qu'un levier de 20:1 aurait fait en avril 2013.
+Pour l'instant : **pas de levier**. Le module 11 montre sur l'or ce qu'un levier de 20:1 aurait fait en avril 2013.
 
 ## 7. Choisir un courtier
 
@@ -177,7 +177,7 @@ Le comparatif détaillé est dans `agents/courtiers.md` : **IBKR** pour le swing
 
 *Étape 4, coût par rapport au milieu* : (100,0257 − 100,01) × 700 = 0,0157 × 700 ≈ **11,00 €**.
 
-*Interprétation* : sur 70 000 € achetés, 11 € de coût d'exécution, soit 0,016 %. C'est peu ici parce que le titre est liquide. Sur un titre de la BVMAC (module 11), le même ordre pourrait coûter plusieurs pourcents.
+*Interprétation* : sur 70 000 € achetés, 11 € de coût d'exécution, soit 0,016 %. C'est peu ici parce que le titre est liquide. Sur un titre de la BVMAC (module 10), le même ordre pourrait coûter plusieurs pourcents.
 
 *Vérification* : `python modules/01-bases-des-marches/solutions/solutions_01.py` affiche « Prix moyen 100.0257, coût vs milieu 11.00 EUR ».
 :::
@@ -206,9 +206,9 @@ Le comparatif détaillé est dans `agents/courtiers.md` : **IBKR** pour le swing
 
 *Étape 2, ce qui se passe vraiment* : à l'ouverture, le premier prix est 42 €. Le stop à 47 est « traversé » ; il devient un ordre au marché, exécuté vers 42 €.
 
-*Étape 3, perte réelle* : (50 − 42) × 100 = **800 €**, soit 2,7 fois le risque prévu, ou −2,7R (module 04).
+*Étape 3, perte réelle* : (50 − 42) × 100 = **800 €**, soit 2,7 fois le risque prévu, ou −2,7R (module 02).
 
-*Étape 4, la parade* : une **option de vente (put)** de prix d'exercice 47 € te donne le droit de vendre à 47 € quoi qu'il arrive. Elle plafonne vraiment la perte, mais tu paies une **prime** à l'achat, perdue si rien ne se passe. En pratique, on accepte le risque de gap, on le réduit en évitant de garder une position la veille de résultats (module 02), et on le mesure dans le journal (une perte de plus de 1R est toujours notée avec sa cause).
+*Étape 4, la parade* : une **option de vente (put)** de prix d'exercice 47 € te donne le droit de vendre à 47 € quoi qu'il arrive. Elle plafonne vraiment la perte, mais tu paies une **prime** à l'achat, perdue si rien ne se passe. En pratique, on accepte le risque de gap, on le réduit en évitant de garder une position la veille de résultats (module 04), et on le mesure dans le journal (une perte de plus de 1R est toujours notée avec sa cause).
 
 ::: robot
 Le courtier papier de tes agents simule ce cas : « si l'ouverture saute le stop, la sortie se fait à l'ouverture, pas au stop ». Tes backtests ne sont donc pas trop optimistes sur les gaps.

@@ -1,4 +1,4 @@
-"""Solutions du module 02 (montants en millions)."""
+"""Solutions du module 04 (montants en millions)."""
 from tradeskills.fundamentals import dcf, ratios
 
 # 1

@@ -1,8 +1,8 @@
-# Module 11 · Bourses africaines : BRVM et BVMAC
+# Module 10 · Bourses africaines : BRVM et BVMAC
 
 **Objectif** : savoir comment fonctionnent la bourse régionale d'Afrique de l'Ouest (BRVM) et celle d'Afrique centrale (BVMAC), ce qui les distingue des marchés européens, et comment les analyser sans tomber dans les pièges des marchés peu liquides.
 
-**Durée** : 3 semaines · **Prérequis** : modules 01, 04 et 08 · **Outils** : `tradeskills.afrique`
+**Durée** : 3 semaines · **Prérequis** : modules 01, 02 et 08 · **Outils** : `tradeskills.afrique`
 
 > Les chiffres de cette leçon (nombre de sociétés cotées, limites de variation, délais de règlement, fiscalité) changent avec le temps. Vérifie chacun sur les sites officiels avant de t'en servir : brvm.org, amf-umoa.org, bvm-ac.com, cosumaf.org, bceao.int, beac.int.
 

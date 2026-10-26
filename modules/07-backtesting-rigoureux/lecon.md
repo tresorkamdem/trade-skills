@@ -2,7 +2,7 @@
 
 **Objectif** : distinguer une stratégie qui a un vrai avantage d'une stratégie qui a seulement été ajustée au passé. C'est le module où ta formation de mathématicien te donne le plus d'avance.
 
-**Durée** : 3 semaines · **Prérequis** : modules 03, 04 et 06, ta Bachelorarbeit
+**Durée** : 3 semaines · **Prérequis** : modules 02, 03 et 06, ta Bachelorarbeit
 
 ## 1. Ce que ta thèse t'a déjà appris
 

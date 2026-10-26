@@ -1,4 +1,4 @@
-# Module 10 · Parcours pro
+# Module 12 · Parcours pro
 
 - [Leçon](lecon.md)
 - [Exercices](exercices.md)

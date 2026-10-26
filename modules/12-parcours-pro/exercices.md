@@ -1,4 +1,4 @@
-# Module 10 · Exercices
+# Module 12 · Exercices
 
 1. **Ton chemin.** Choisis ton chemin principal pour les 3 prochaines années (salarié, prestataire, gérant, ou une combinaison) et écris pourquoi en une demi-page.
 

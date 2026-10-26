@@ -18,7 +18,7 @@ Une équipe d'agents, inspirée des « 11 agents » qui veulent remplacer un Ter
 | Scanner | `scanner.py` | Calcule les indicateurs et classe les candidats par momentum | `indicators` (module 03) |
 | Entrée | `entree_sortie.py` | Signal d'achat, stop, objectif | `indicators` |
 | Sortie | `entree_sortie.py` | Stop suiveur, sortie Donchian, fermeture de fin de séance | `indicators` |
-| Budget | `budget.py` | Taille de position à risque fixe ; poids GMV Ledoit-Wolf, parité de risque ou 1/n | `risk` (module 04), `portfolio`, `optim` (module 08) |
+| Budget | `budget.py` | Taille de position à risque fixe ; poids GMV Ledoit-Wolf, parité de risque ou 1/n | `risk` (module 02), `portfolio`, `optim` (module 08) |
 | Risque | `risque.py` | Refuse les entrées si risque total, corrélation ou baisse de la poche trop forts ; VaR, CVaR, volatilité | `portfolio`, `optim` |
 | Courtier | `courtier.py` | Exécute à l'ouverture suivante avec frais et glissement, gère les gaps, stops et objectifs | |
 | Time Machine | `time_machine.py` | Backtest d'une poche, comparaison à 1/n, intervalle de confiance du Sharpe | `metrics`, `validation` (module 07) |

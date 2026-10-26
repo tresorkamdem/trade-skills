@@ -9,19 +9,19 @@ Coche un module quand tu as fait tous ses exercices.
 | | Module | Durée | Outils | Lien avec tes projets |
 | --- | --- | --- | --- | --- |
 | [ ] | [01 · Bases des marchés](modules/01-bases-des-marches/lecon.md) | 1 à 2 sem. | | Coût du turnover de la thèse |
-| [ ] | [02 · Analyse fondamentale](modules/02-analyse-fondamentale/lecon.md) | 3 sem. | `fundamentals` | Paquet A6 de MAÀT |
+| [ ] | [02 · Gestion du risque](modules/02-gestion-du-risque/lecon.md) | 2 sem. | `risk` | Prolonge la thèse au niveau du trade |
 | [ ] | [03 · Analyse technique](modules/03-analyse-technique/lecon.md) | 3 sem. | `indicators`, `signals` | Tests statistiques |
-| [ ] | [04 · Gestion du risque](modules/04-gestion-du-risque/lecon.md) | 2 sem. | `risk` | Prolonge la thèse au niveau du trade |
+| [ ] | [04 · Analyse fondamentale](modules/04-analyse-fondamentale/lecon.md) | 3 sem. | `fundamentals` | Paquet A6 de MAÀT |
 | [ ] | [05 · Day et swing trading](modules/05-day-et-swing-trading/lecon.md) | 4 sem. | `journal` | Source du track record |
 | [ ] | [06 · TradingView et Pine Script](modules/06-tradingview-pine-script/lecon.md) | 3 sem. | `pine/`, `node/` | Alertes Telegram (comme SESHAT) |
 | [ ] | [07 · Backtesting rigoureux](modules/07-backtesting-rigoureux/lecon.md) | 3 sem. | `validation` | Test de Sharpe du « Ausblick » |
 | [ ] | [08 · Optimisation de portefeuille avancée](modules/08-optimisation-de-portefeuille/lecon.md) | 4 sem. | `optim` | Shrinkage non linéaire ; offre C1 v2 |
 | [ ] | [09 · Performance et reporting](modules/09-performance-et-reporting/lecon.md) | 2 sem. | `report` | Paquet « reporting » de MAÀT |
-| [ ] | [10 · Parcours pro](modules/10-parcours-pro/lecon.md) | 12 à 24 mois | | Plan de développement de MAÀT |
-| [ ] | [11 · Bourses africaines : BRVM et BVMAC](modules/11-bourses-africaines/lecon.md) | 3 sem. | `afrique` | Pilier D de MAÀT (diaspora, Afrique) |
-| [ ] | [12 · L'or](modules/12-or/lecon.md) | 1 sem. | `indicators` | Palier 0 du robot Or-1 |
+| [ ] | [10 · Bourses africaines : BRVM et BVMAC](modules/10-bourses-africaines/lecon.md) | 3 sem. | `afrique` | Pilier D de MAÀT (diaspora, Afrique) |
+| [ ] | [11 · L'or](modules/11-or/lecon.md) | 1 sem. | `indicators` | Palier 0 du robot Or-1 |
+| [ ] | [12 · Parcours pro](modules/12-parcours-pro/lecon.md) | 12 à 24 mois | | Plan de développement de MAÀT |
 
-Ordre conseillé : 01 → 04 → 03 → 02 → 05 → 06 → 07 → 08 → 09 → 11 → 12, et le 10 en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
+Les modules se suivent dans l'ordre des numéros, de 01 à 11 ; le 12 (parcours pro) se lit en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
 
 ## Structure
 

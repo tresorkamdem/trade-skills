@@ -2,7 +2,7 @@
 
 **Objectif** : aller au-delà du portefeuille de variance minimale de ta thèse, vers les méthodes utilisées en gestion professionnelle, et savoir laquelle choisir pour un client.
 
-**Durée** : 4 semaines · **Prérequis** : Bachelorarbeit, modules 02 et 07
+**Durée** : 4 semaines · **Prérequis** : Bachelorarbeit, modules 04 et 07
 
 ## 1. Rappel : où s'arrêtait ta thèse
 

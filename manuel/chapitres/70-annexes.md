@@ -51,18 +51,18 @@ Le glossaire en trois langues, les formules à connaître par cœur, les modèle
 | Spread | ask − bid | 01 |
 | Coût annuel | allers-retours par an × coût d'un aller-retour | 01 |
 | Perte avec levier L | L × baisse du sous-jacent | 01 |
-| PER | capitalisation / résultat net | 02 |
-| EV/EBIT | (capitalisation + dette − trésorerie) / EBIT | 02 |
-| ROE | résultat net / fonds propres | 02 |
-| DCF | Σ FCFₜ/(1+k)ᵗ + [FCF_N (1+g)/(k−g)] / (1+k)ᴺ | 02 |
+| Taille de position | (capital × risque %) / (entrée − stop), arrondie à l'inférieur | 02 |
+| R-multiple | (sortie − entrée) / (entrée − stop) | 02 |
+| Espérance | p × G − (1 − p) × P | 02 |
+| Kelly | p − (1 − p) / b, b = G / P | 02 |
+| Gain pour effacer une perte x | 1 / (1 − x) − 1 | 02 |
 | EMA | α × close + (1 − α) × EMA précédente, α = 2/(n+1) | 03 |
 | True Range | max(haut − bas, abs(haut − clôture veille), abs(bas − clôture veille)) | 03 |
 | RSI | 100 − 100 / (1 + moyenne des hausses / moyenne des baisses) | 03 |
-| Taille de position | (capital × risque %) / (entrée − stop), arrondie à l'inférieur | 04 |
-| R-multiple | (sortie − entrée) / (entrée − stop) | 04 |
-| Espérance | p × G − (1 − p) × P | 04 |
-| Kelly | p − (1 − p) / b, b = G / P | 04 |
-| Gain pour effacer une perte x | 1 / (1 − x) − 1 | 04 |
+| PER | capitalisation / résultat net | 04 |
+| EV/EBIT | (capitalisation + dette − trésorerie) / EBIT | 04 |
+| ROE | résultat net / fonds propres | 04 |
+| DCF | Σ FCFₜ/(1+k)ᵗ + [FCF_N (1+g)/(k−g)] / (1+k)ᴺ | 04 |
 | Trades pour prouver E | n ≥ (z × σ / E)² | 05 |
 | Erreur type du Sharpe annualisé | ≈ 1 / √(années) | 07 |
 | GMV | Σ⁻¹ 1 / (1ᵀ Σ⁻¹ 1) | 08 |
@@ -72,8 +72,8 @@ Le glossaire en trois langues, les formules à connaître par cœur, les modèle
 | Sharpe | (r − r_f) / σ | 09 |
 | Information ratio | surperformance annualisée / tracking error | 09 |
 | TWR | Π (1 + rₜ)^(1/années) − 1 | 09 |
-| FCFA → € | montant / 655,957 | 11 |
-| 4GLD | (XAU/USD ÷ EUR/USD) ÷ 31,1035 | 12 |
+| FCFA → € | montant / 655,957 | 10 |
+| 4GLD | (XAU/USD ÷ EUR/USD) ÷ 31,1035 | 11 |
 
 # Modèles à remplir {#modeles data-num="Annexe C"}
 
@@ -130,7 +130,7 @@ Ordres et stops passés à : ____ h ____
 | `source .venv/bin/activate` | Active l'environnement Python |
 | `git pull` | Récupère la dernière version du dépôt (dont le suivi du soir) |
 | `pytest` | Vérifie que tout le code fonctionne |
-| `python modules/04-gestion-du-risque/solutions/solutions_04.py` | Lance les solutions d'un module |
+| `python modules/02-gestion-du-risque/solutions/solutions_02.py` | Lance les solutions d'un module |
 | `python -m tradeskills.journal suivi/etat/journal_swing.csv` | Analyse le journal de la poche swing |
 | `python -m tradeskills.agents actualiser --config agents/config.json` | Télécharge les cours (sur ton Mac) |
 | `python -m tradeskills.agents backtest --config agents/config.json --source cache:donnees/marche --poche swing` | Time Machine d'une poche |

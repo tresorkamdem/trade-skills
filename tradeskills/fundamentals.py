@@ -1,4 +1,4 @@
-"""Ratios financiers et valorisation simple (module 02)."""
+"""Ratios financiers et valorisation simple (module 04)."""
 from __future__ import annotations
 
 

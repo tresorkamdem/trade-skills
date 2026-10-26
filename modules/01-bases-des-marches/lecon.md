@@ -32,7 +32,7 @@ Un marché met en relation des acheteurs et des vendeurs. Chaque ordre exécuté
 | Stop-limite | Devient un ordre limite au seuil | Peut ne pas être exécuté et te laisser dans une perte |
 | Trailing stop | Stop qui suit le prix à distance fixe | Sorti trop tôt si la distance est trop serrée |
 
-Règle de base : **chaque position a un stop défini avant l'entrée**. Le module 04 explique comment le placer et comment en déduire la taille de la position.
+Règle de base : **chaque position a un stop défini avant l'entrée**. Le module 02 explique comment le placer et comment en déduire la taille de la position.
 
 ## 4. Les classes d'actifs
 

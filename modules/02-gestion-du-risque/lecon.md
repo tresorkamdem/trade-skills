@@ -1,4 +1,4 @@
-# Module 04 · Gestion du risque
+# Module 02 · Gestion du risque
 
 **Objectif** : décider combien tu risques sur chaque trade et sur l'ensemble de ton capital, et savoir à l'avance à quoi ressembleront tes pires périodes.
 
