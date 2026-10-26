@@ -1,0 +1,24 @@
+name: tester Telegram
+
+# Envoie un message d'essai sur Telegram avec les secrets TELEGRAM_BOT_TOKEN et TELEGRAM_CHAT_ID.
+# Lancement : onglet Actions → tester Telegram → Run workflow.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  essai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Envoyer un message d'essai
+        run: python -m tradeskills.agents telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
