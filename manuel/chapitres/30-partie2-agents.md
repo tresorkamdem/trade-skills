@@ -166,7 +166,7 @@ Elle rejoue chaque poche sur tout l'historique et compare à une **référence 1
 
 - **swing** : espérance positive, risque faible, mais rendement très inférieur à la référence ; non significatif. À améliorer, pas à abandonner.
 - **day** : espérance négative sur 77 trades, coupe-circuit déclenché. En l'état, à ne jamais passer en réel.
-- **long terme** : meilleur Sharpe que 1/n, mais faussé depuis novembre 2025 par l'anomalie de données (partie III).
+- **long terme** : meilleur Sharpe que 1/n, mais ces chiffres sont faussés depuis novembre 2025 par une anomalie de données, corrigée depuis (partie III) : reprends les chiffres corrigés dans `suivi/rapports/backtest.md`.
 - **tradingview** : vide, normal tant que le pont des alertes n'est pas branché.
 
 ::: robot

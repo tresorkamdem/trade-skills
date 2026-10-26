@@ -230,15 +230,16 @@ Supprime son bloc de `agents/config.json` (attention aux virgules). Ses fichiers
 | Augmenter le risque pour « rattraper » | `risque_par_trade` à 0,03 | Interdit : c'est le premier pas vers la martingale |
 | Juger sur 3 semaines | « La nouvelle version gagne plus » | 30 trades minimum, 2 à 3 mois de papier |
 
-# Anomalie connue : la poche long terme {#anomalie data-num="Partie III"}
+# Anomalie corrigée : la poche long terme {#anomalie data-num="Partie III"}
 
-En écrivant ce manuel, j'ai vérifié chaque chiffre de tes poches. La poche long terme a un défaut :
+En écrivant ce manuel, j'ai vérifié chaque chiffre de tes poches. La poche long terme avait un défaut, corrigé le 26 octobre 2026 :
 
 - **Symptôme** : depuis le rééquilibrage du 4 novembre 2025, elle est investie à environ 99 % dans un seul ETF, les obligations d'État zone euro (EUNH), alors que `poids_max` vaut 40 %.
 - **Cause** : pour estimer la covariance, le code retire tout actif qui a **un seul jour de cours manquant** dans la fenêtre de 252 jours. Les ETF de Xetra n'ont pas exactement le même nombre de barres chez Yahoo (1 273 à 1 275 selon le rapport `donnees.md`). Quand il ne reste qu'un actif, le plafond est relevé à 100 % (règle « au moins 1/n ») et tout part dans cet actif.
 - **Preuve** : je l'ai reproduit sur des cours simulés : cinq actifs, un jour manquant pour quatre d'entre eux, et la poche se retrouve à 99 % dans le cinquième.
-- **Conséquence** : sa Time Machine (Sharpe 1,24) mélange quatre ans de vrai GMV et un an d'obligations seules. Elle doit être refaite après correction.
-- **Correction** : compléter les jours manquants par le dernier cours connu avant de calculer les rendements (un jour sans cotation compte comme un rendement nul), au lieu d'écarter l'actif. C'est une ligne de code ; je te la propose séparément, pour que tu décides quand l'appliquer.
+- **Conséquence** : sa Time Machine (Sharpe 1,24, chiffres de la partie II) mélangeait quatre ans de vrai GMV et un an d'obligations seules.
+- **Correction** : les jours manquants sont maintenant complétés par le dernier cours connu avant de calculer les rendements (un jour sans cotation compte comme un rendement nul), au lieu d'écarter l'actif. Un test automatique (`pytest`) vérifie qu'un jour manquant ne fait plus sortir un ETF de la poche.
+- **Ce que tu verras** : dès le passage du soir suivant, `suivi/rapports/backtest.md` donne la Time Machine corrigée ; remplace les chiffres long terme de la partie II par ceux-là. La poche papier, elle, se répartit à nouveau entre les cinq ETF au rééquilibrage du premier jour de cotation de novembre (2 novembre 2026). Note sa valeur ce jour-là : c'est le vrai départ de son suivi.
 
 ::: retenir
 Ce genre d'anomalie est exactement ce que le module 07 apprend à chercher : un résultat trop beau ou un comportement étrange (99 % dans une ligne plafonnée à 40 %) se vérifie avant de se croire.
