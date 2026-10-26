@@ -19,8 +19,9 @@ Coche un module quand tu as fait tous ses exercices.
 | [ ] | [09 · Performance et reporting](modules/09-performance-et-reporting/lecon.md) | 2 sem. | `report` | Paquet « reporting » de MAÀT |
 | [ ] | [10 · Parcours pro](modules/10-parcours-pro/lecon.md) | 12 à 24 mois | | Plan de développement de MAÀT |
 | [ ] | [11 · Bourses africaines : BRVM et BVMAC](modules/11-bourses-africaines/lecon.md) | 3 sem. | `afrique` | Pilier D de MAÀT (diaspora, Afrique) |
+| [ ] | [12 · L'or](modules/12-or/lecon.md) | 1 sem. | `indicators` | Palier 0 du robot Or-1 |
 
-Ordre conseillé : 01 → 04 → 03 → 02 → 05 → 06 → 07 → 08 → 09 → 11, et le 10 en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
+Ordre conseillé : 01 → 04 → 03 → 02 → 05 → 06 → 07 → 08 → 09 → 11 → 12, et le 10 en parallèle dès le début. Chaque module a une leçon, des exercices et des solutions exécutables.
 
 ## Structure
 
