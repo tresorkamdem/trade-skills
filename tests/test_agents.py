@@ -154,6 +154,24 @@ def test_alert_format():
     assert alertes.envoyer([msg], token=None, chat_id=None) is False
 
 
+def test_daily_summary_sent_even_without_orders(tmp_path, source, monkeypatch):
+    envoyes = []
+    monkeypatch.setattr(alertes, "envoyer", lambda messages: envoyes.append(messages))
+    conf = Config([SWING, LONG])
+    orchestre.passage(conf, source, tmp_path)
+    orchestre.passage(conf, source, tmp_path)  # second passage : aucune nouvelle exécution
+    assert len(envoyes) == 2
+    assert envoyes[1][0].startswith("📊 Passage du") and "argent fictif" in envoyes[1][0]
+    assert any(m.startswith("• swing : ") for m in envoyes[1])
+
+
+def test_cli_telegram_without_secrets(monkeypatch):
+    monkeypatch.delenv("TELEGRAM_BOT_TOKEN", raising=False)
+    monkeypatch.delenv("TELEGRAM_CHAT_ID", raising=False)
+    with pytest.raises(SystemExit, match="TELEGRAM_BOT_TOKEN ou TELEGRAM_CHAT_ID manquant"):
+        main(["telegram"])
+
+
 def test_daily_run_twice_is_idempotent(tmp_path, source):
     conf = Config([SWING, LONG])
     orchestre.passage(conf, source, tmp_path, envoyer=False)

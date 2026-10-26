@@ -5,6 +5,7 @@
   python -m tradeskills.agents quotidien  --source cache:donnees/marche
   python -m tradeskills.agents tableau    --source cache:donnees/marche
   python -m tradeskills.agents publier    --source cache:donnees/marche   (envoi vers SESHAT)
+  python -m tradeskills.agents telegram                                    (message d'essai)
 
 Sources : simulee, yahoo, csv:<dossier> (exports TradingView) ou cache:<dossier> (rempli par `actualiser`).
 """
@@ -15,6 +16,7 @@ import json
 import os
 from pathlib import Path
 
+from . import alertes
 from . import config as cfg
 from . import instantane, marche, orchestre, signaux, tableau, time_machine
 
@@ -22,7 +24,7 @@ from . import instantane, marche, orchestre, signaux, tableau, time_machine
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="python -m tradeskills.agents", description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("commande", choices=["actualiser", "backtest", "quotidien", "tableau", "publier"])
+    parser.add_argument("commande", choices=["actualiser", "backtest", "quotidien", "tableau", "publier", "telegram"])
     parser.add_argument("--config", default="agents/config.exemple.json")
     parser.add_argument("--source", default="simulee", help="simulee, yahoo, csv:<dossier> ou cache:<dossier>")
     parser.add_argument("--donnees", default="donnees/marche", help="dossier du cache (commande actualiser)")
@@ -30,6 +32,17 @@ def main(argv: list[str] | None = None) -> None:
     parser.add_argument("--dossier", default="agents", help="où écrire états, journaux et rapports")
     parser.add_argument("--sans-alertes", action="store_true", help="n'envoie rien sur Telegram")
     args = parser.parse_args(argv)
+
+    if args.commande == "telegram":
+        if not (os.environ.get("TELEGRAM_BOT_TOKEN") and os.environ.get("TELEGRAM_CHAT_ID")):
+            raise SystemExit("TELEGRAM_BOT_TOKEN ou TELEGRAM_CHAT_ID manquant (secrets GitHub du dépôt).")
+        try:
+            alertes.envoyer(["✅ Essai réussi : les agents de trade-skills peuvent t'écrire ici."])
+        except Exception as e:  # message clair plutôt qu'une trace Python
+            raise SystemExit(f"Telegram a refusé le message ({e}). Vérifie le jeton et le chat_id, "
+                             "et envoie /start à ton bot.") from None
+        print("Message d'essai envoyé sur Telegram.")
+        return
 
     conf = cfg.charger(args.config)
     dossier = Path(args.dossier)

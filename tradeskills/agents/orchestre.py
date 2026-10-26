@@ -20,7 +20,7 @@ from .moteur import Moteur
 def passage(config: Config, source, dossier: str | Path = "agents", envoyer: bool = True) -> str:
     dossier = Path(dossier)
     (dossier / "etat").mkdir(parents=True, exist_ok=True)
-    sections, messages, total, total_initial = [], [], 0.0, 0.0
+    sections, messages, resume, total, total_initial = [], [], [], 0.0, 0.0
 
     for poche in config.poches:
         chemin_etat = dossier / "etat" / f"{poche.nom}.json"
@@ -41,7 +41,9 @@ def passage(config: Config, source, dossier: str | Path = "agents", envoyer: boo
         messages += [alertes.formater(poche.nom, {**o.__dict__, "prix": None, "motif": f"demain : {o.motif}"})
                      for o in m.courtier.ordres]
         sections.append(_section(poche, m, nouveaux, m.refus[n_refus:]))
-        total += m.courtier.valeur(m.dernier_prix)
+        valeur = m.courtier.valeur(m.dernier_prix)
+        resume.append(f"• {poche.nom} : {valeur:,.0f} ({valeur / poche.capital - 1:+.1%})")
+        total += valeur
         total_initial += poche.capital
 
     entete = [
@@ -55,7 +57,10 @@ def passage(config: Config, source, dossier: str | Path = "agents", envoyer: boo
     (dossier / "rapports").mkdir(parents=True, exist_ok=True)
     (dossier / "rapports" / f"{date.today():%Y-%m-%d}.md").write_text(rapport, encoding="utf-8")
     if envoyer:
-        alertes.envoyer(messages)
+        # Un résumé chaque soir, même sans ordre, pour savoir que le passage a bien tourné
+        titre = (f"📊 Passage du {date.today():%d/%m/%Y} · total {total:,.0f} "
+                 f"({total / total_initial - 1:+.1%}), argent fictif")
+        alertes.envoyer([titre, *resume, *messages])
     return rapport
 
 
