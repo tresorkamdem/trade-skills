@@ -13,3 +13,4 @@ node/signaux.jsonl
 node/alertes.log
 alertes.log
 agents/tableau.html
+manuel/build/
