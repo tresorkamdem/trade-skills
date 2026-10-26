@@ -8,7 +8,7 @@ Solutions : `python modules/05-day-et-swing-trading/solutions/solutions_05.py`
 
 3. **Taille d'échantillon.** Avec un écart-type de 1,5R par trade, combien de trades faut-il pour qu'une espérance de +0,2R soit significativement positive à 5 % (test unilatéral) ?
 
-4. **Plan de trading écrit.** Rédige ton plan : marchés, horaires, 2 setups maximum (avec contexte, entrée, stop, sortie), plan de risque du module 04, routine avant et après séance.
+4. **Plan de trading écrit.** Rédige ton plan : marchés, horaires, 2 setups maximum (avec contexte, entrée, stop, sortie), plan de risque du module 02, routine avant et après séance.
 
 5. **Paper trading.** Fais 20 trades en démo avec ce plan sur 4 semaines. Remplis le journal chaque jour, puis analyse-le.
 

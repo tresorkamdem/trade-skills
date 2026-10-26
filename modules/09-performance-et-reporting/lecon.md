@@ -2,7 +2,7 @@
 
 **Objectif** : mesurer une performance comme un professionnel, l'expliquer (d'où vient-elle ?), et la présenter à un client de façon claire et honnête.
 
-**Durée** : 2 semaines · **Prérequis** : modules 04, 07 et 08
+**Durée** : 2 semaines · **Prérequis** : modules 02, 07 et 08
 
 ## 1. Les mesures absolues
 

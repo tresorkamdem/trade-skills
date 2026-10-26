@@ -1,4 +1,4 @@
-"""Solutions du module 12 (exercices 4 à 8)."""
+"""Solutions du module 11 (exercices 4 à 8)."""
 import numpy as np
 
 ONCE_G = 31.1035

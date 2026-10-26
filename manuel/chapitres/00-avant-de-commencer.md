@@ -13,7 +13,7 @@ Il a cinq parties :
 | Partie | Contenu | Quand la lire |
 | --- | --- | --- |
 | **I · Le cours** | Les 12 modules du dépôt, développés, avec exercices et solutions pas à pas, puis un examen final | Pendant l'apprentissage, un module à la fois |
-| **II · Tes agents** | Comment fonctionne chaque agent de ton équipe, de la donnée au message Telegram | Après les modules 03 et 04 |
+| **II · Tes agents** | Comment fonctionne chaque agent de ton équipe, de la donnée au message Telegram | Après les modules 02 et 03 |
 | **III · Tes robots et leur calibrage** | Les poches (tes « robots »), tous leurs réglages, comment les changer et les tester en papier | Après le module 07 |
 | **IV · Le suivi automatique** | Le passage du soir sur GitHub, Telegram, SESHAT, et que faire quand quelque chose casse | Dès maintenant, puis en référence |
 | **V · Ta vie d'investisseur** | La routine du matin et du soir, la journée type, les revues, les check-lists, le passage à l'argent réel | Quand le parcours est fini, et chaque fois que tu doutes |
@@ -75,7 +75,7 @@ pip install -e ".[dev]"
 Ensuite, à chaque session, `source .venv/bin/activate` suffit, puis par exemple :
 
 ```bash
-python modules/04-gestion-du-risque/solutions/solutions_04.py
+python modules/02-gestion-du-risque/solutions/solutions_02.py
 ```
 
 Pour récupérer la dernière version du dépôt : `git pull`.
@@ -96,22 +96,22 @@ Sur Mac, **Cmd + Tab** passe d'une application à l'autre, **Ctrl + flèches** c
 
 ## L'ordre des modules
 
-L'ordre conseillé n'est pas l'ordre des numéros. Le risque passe avant l'analyse, parce qu'il décide si tu survis à tes erreurs.
+Les modules sont numérotés dans l'ordre où tu les étudies : il suffit de les suivre de 01 à 11. Le risque (module 02) passe avant l'analyse, parce qu'il décide si tu survis à tes erreurs. Le module 12 (parcours pro) se lit en parallèle, du début à la fin.
 
 | Étape | Module | Durée | Ce que tu sauras faire à la fin |
 | --- | --- | --- | --- |
 | 1 | 01 · Bases des marchés | 1 à 2 sem. | Lire un carnet d'ordres, chiffrer le coût d'un trade |
-| 2 | 04 · Gestion du risque | 2 sem. | Calculer une taille de position, raisonner en R |
+| 2 | 02 · Gestion du risque | 2 sem. | Calculer une taille de position, raisonner en R |
 | 3 | 03 · Analyse technique | 3 sem. | Lire un graphique, tester un indicateur au lieu d'y croire |
-| 4 | 02 · Analyse fondamentale | 3 sem. | Lire des comptes, faire un DCF, suivre la macro |
+| 4 | 04 · Analyse fondamentale | 3 sem. | Lire des comptes, faire un DCF, suivre la macro |
 | 5 | 05 · Day et swing trading | 4 sem. | Écrire un plan de trading, tenir un journal |
 | 6 | 06 · TradingView et Pine Script | 3 sem. | Coder un indicateur et une stratégie, créer des alertes |
 | 7 | 07 · Backtesting rigoureux | 3 sem. | Distinguer un vrai avantage d'une sur-optimisation |
 | 8 | 08 · Optimisation de portefeuille | 4 sem. | Choisir et défendre une méthode d'allocation |
 | 9 | 09 · Performance et reporting | 2 sem. | Mesurer, expliquer et présenter une performance |
-| 10 | 11 · Bourses africaines | 3 sem. | Analyser la BRVM et la BVMAC sans tomber dans leurs pièges |
-| 11 | 12 · L'or | 1 sem. | Expliquer l'or et les règles du robot Or-1 |
-| en continu | 10 · Parcours pro | 12 à 24 mois | Savoir comment passer à une activité avec des clients |
+| 10 | 10 · Bourses africaines | 3 sem. | Analyser la BRVM et la BVMAC sans tomber dans leurs pièges |
+| 11 | 11 · L'or | 1 sem. | Expliquer l'or et les règles du robot Or-1 |
+| en continu | 12 · Parcours pro | 12 à 24 mois | Savoir comment passer à une activité avec des clients |
 
 Cela fait environ **31 semaines de cours**, soit 7 à 8 mois à raison de 5 à 8 heures par semaine, à côté de tes études. Les mois restants servent au paper trading, à l'examen final et à la mise au point de tes robots.
 
@@ -119,15 +119,15 @@ Cela fait environ **31 semaines de cours**, soit 7 à 8 mois à raison de 5 à 8
 
 | Mois | Cours | En parallèle |
 | --- | --- | --- |
-| 1 | Modules 01 et 04 | Le passage du soir tourne déjà : lis chaque message Telegram |
+| 1 | Modules 01 et 02 | Le passage du soir tourne déjà : lis chaque message Telegram |
 | 2 | Module 03 | Premiers dessins sur TradingView, journal d'observation (sans trades) |
-| 3 | Module 02 | Calendrier macro chaque lundi |
+| 3 | Module 04 | Calendrier macro chaque lundi |
 | 4 | Module 05 | Premiers trades de démonstration, à la main, avec le journal |
 | 5 | Module 06 | Ton premier script Pine ; comparaison avec la poche swing |
 | 6 | Module 07 | Revue critique des backtests de tes poches |
 | 7 | Module 08 | Revue de la poche long terme ; calibrage |
-| 8 | Modules 09 et 11 | Premier rapport de performance de tes poches |
-| 9 | Module 12 et robot Or-1 | Paliers 1 à 3 du robot or |
+| 8 | Modules 09 et 10 | Premier rapport de performance de tes poches |
+| 9 | Module 11 et robot Or-1 | Paliers 1 à 3 du robot or |
 | 10 à 12 | Examen final, partie V | Trois mois de papier « comme en vrai » : routine complète |
 
 ## Les règles d'or

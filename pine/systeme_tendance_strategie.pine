@@ -1,5 +1,5 @@
 //@version=6
-// Version backtestable du système de tendance, avec taille de position à risque fixe (module 04)
+// Version backtestable du système de tendance, avec taille de position à risque fixe (module 02)
 // et coûts réalistes. Onglet « Strategy Tester » pour les résultats.
 strategy("Trade Skills · Stratégie tendance", overlay = true,
      initial_capital = 10000, currency = currency.EUR,

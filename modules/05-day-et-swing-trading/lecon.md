@@ -2,7 +2,7 @@
 
 **Objectif** : savoir comment travaillent les traders de court terme, choisir le style qui te correspond, et construire une routine et un journal qui produisent un track record.
 
-**Durée** : 4 semaines de paper trading au minimum · **Prérequis** : modules 01, 03 et 04
+**Durée** : 4 semaines de paper trading au minimum · **Prérequis** : modules 01, 02 et 03
 
 ## 1. Choisir son horizon
 
@@ -35,7 +35,7 @@
 
 **Avant la séance (15 à 30 minutes)**
 
-1. Calendrier macro et publications du jour (module 02).
+1. Calendrier macro et publications du jour (module 04).
 2. Tendance des indices et des taux.
 3. Liste de surveillance de 5 à 10 titres avec niveaux clés notés à l'avance.
 4. Rappel du plan de risque : risque par trade, arrêt quotidien.

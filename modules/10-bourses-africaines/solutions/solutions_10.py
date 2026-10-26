@@ -1,4 +1,4 @@
-"""Solutions du module 11 (exercices 1 à 6, sur données simulées)."""
+"""Solutions du module 10 (exercices 1 à 6, sur données simulées)."""
 import numpy as np
 import pandas as pd
 

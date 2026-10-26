@@ -2,7 +2,7 @@
 
 **Objectif** : utiliser TradingView comme poste de travail, écrire tes propres indicateurs et stratégies en Pine Script, et recevoir tes signaux sur Telegram.
 
-**Durée** : 3 semaines · **Prérequis** : modules 03 et 04
+**Durée** : 3 semaines · **Prérequis** : modules 02 et 03
 
 ## 1. TradingView comme poste de travail
 

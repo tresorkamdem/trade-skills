@@ -53,7 +53,7 @@ Chaque poche a des **réglages communs** (au premier niveau) et des **paramètre
 | `style` | | `swing`, `day`, `long_terme` ou `signaux` | | |
 | `capital` | | Capital fictif de départ | Ce que tu investiras vraiment un jour | Sans effet sur une poche déjà démarrée (voir section 7) |
 | `univers` | | Codes Yahoo des actifs autorisés | 4 à 15 lignes liquides | Trop de lignes corrélées : l'agent Risque refusera beaucoup |
-| `risque_par_trade` | 0,01 | Part du capital perdue si le stop est touché | 0,0025 à 0,01 | Au-delà de 0,02 : baisses de −25 % à −50 % (module 04) |
+| `risque_par_trade` | 0,01 | Part du capital perdue si le stop est touché | 0,0025 à 0,01 | Au-delà de 0,02 : baisses de −25 % à −50 % (module 02) |
 | `max_positions` | 5 | Positions ouvertes simultanément | 3 à 8 | Trop haut : capital dispersé ; trop bas : signaux perdus |
 | `poids_max` | 0,25 | Part maximale du capital dans une ligne | 0,15 à 0,4 | Trop haut : une seule ligne peut faire −10 % de la poche en un gap |
 | `risque_total_max` | 0,06 | Somme des risques ouverts (distance au stop) | 0,03 à 0,08 | Au-delà de 0,10 : une mauvaise journée corrélée fait très mal |
@@ -225,7 +225,7 @@ Supprime son bloc de `agents/config.json` (attention aux virgules). Ses fichiers
 | Piège | Symptôme | Parade |
 | --- | --- | --- |
 | Sur-optimisation | Tu essaies 30 réglages et gardes le meilleur | Registre, 10 essais maximum, voisins stables |
-| Changer après une perte | « Le stop était trop serré » après une série de 5 pertes | Une série de pertes est normale (module 04). On ne change qu'à date fixe (revue trimestrielle) |
+| Changer après une perte | « Le stop était trop serré » après une série de 5 pertes | Une série de pertes est normale (module 02). On ne change qu'à date fixe (revue trimestrielle) |
 | Plusieurs changements à la fois | On ne sait plus ce qui a marché | Un seul réglage par poche jumelle |
 | Augmenter le risque pour « rattraper » | `risque_par_trade` à 0,03 | Interdit : c'est le premier pas vers la martingale |
 | Juger sur 3 semaines | « La nouvelle version gagne plus » | 30 trades minimum, 2 à 3 mois de papier |
@@ -247,13 +247,13 @@ Ce genre d'anomalie est exactement ce que le module 07 apprend à chercher : un 
 
 # Le robot Or-1 {#or1 data-num="Partie III"}
 
-Le robot or est **prévu, pas encore construit**. Seul le palier 0 (le module 12) existe. Voici le plan validé et ce que tu pourras régler.
+Le robot or est **prévu, pas encore construit**. Seul le palier 0 (le module 11) existe. Voici le plan validé et ce que tu pourras régler.
 
 ## Les sept paliers
 
 | Palier | Contenu | Validation |
 | --- | --- | --- |
-| 0 · Comprendre l'or | Module 12 | Les trois critères de la section 8 du module 12 |
+| 0 · Comprendre l'or | Module 11 | Les trois critères de la section 8 du module 11 |
 | 1 · Les données | Une nouvelle poche « or » dans `tradeskills/agents`, signaux sur XAU/USD journalier (20 ans), exécution papier sur 4GLD en euros | Données propres sur 20 ans |
 | 2 · Le backtest | 2005-2020 pour construire, **2021-2026 scellé**, testé une seule fois | Critères ci-dessous |
 | 3 · Le contre-exemple | La martingale rejouée sur les mêmes données, avec la date de sa ruine | Tu sais l'expliquer |
@@ -263,7 +263,7 @@ Le robot or est **prévu, pas encore construit**. Seul le palier 0 (le module 12
 
 ## Les réglages qu'Or-1 aura
 
-Les règles du module 12 deviendront des paramètres, exactement comme la poche swing :
+Les règles du module 11 deviendront des paramètres, exactement comme la poche swing :
 
 | Réglage prévu | Valeur de départ | À tester autour de |
 | --- | --- | --- |

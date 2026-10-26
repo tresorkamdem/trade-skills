@@ -1,6 +1,6 @@
-# Module 04 · Exercices
+# Module 02 · Exercices
 
-Solutions : `python modules/04-gestion-du-risque/solutions/solutions_04.py`
+Solutions : `python modules/02-gestion-du-risque/solutions/solutions_02.py`
 
 1. **Taille de position.** Capital 8 000 EUR, risque 0,75 %. Achat de SAP à 210 EUR, stop à 203 EUR. Combien d'actions ? Quel montant investi ?
 

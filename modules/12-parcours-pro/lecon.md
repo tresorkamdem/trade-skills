@@ -1,4 +1,4 @@
-# Module 10 · Parcours pro
+# Module 12 · Parcours pro
 
 **Objectif** : savoir comment passer d'un trader qui apprend à un professionnel de la gestion de portefeuille avec des clients, légalement et de façon crédible.
 

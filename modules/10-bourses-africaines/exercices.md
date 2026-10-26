@@ -1,6 +1,6 @@
-# Module 11 · Exercices
+# Module 10 · Exercices
 
-Solutions : `python modules/11-bourses-africaines/solutions/solutions_11.py`
+Solutions : `python modules/10-bourses-africaines/solutions/solutions_10.py`
 
 1. **Parité.** Tu investis 3 000 EUR à la BRVM. Combien de FCFA reçois-tu ? Une action cotée 15 000 FCFA verse un dividende net de 1 100 FCFA : quel est son rendement en dividende, et combien d'euros reçois-tu pour 13 actions ?
 

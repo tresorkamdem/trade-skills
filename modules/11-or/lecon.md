@@ -1,8 +1,8 @@
-# Module 12 · L'or
+# Module 11 · L'or
 
 **Objectif** : savoir expliquer pourquoi l'or monte ou baisse, connaître les façons de le trader depuis l'Allemagne avec leurs coûts et leurs risques, et comprendre les règles de risque du robot Or-1 avant de le construire.
 
-**Durée** : 1 semaine · **Prérequis** : modules 01 et 04 · **Outils** : TradingView (gratuit suffit), `tradeskills.indicators`
+**Durée** : 1 semaine · **Prérequis** : modules 01 et 02 · **Outils** : TradingView (gratuit suffit), `tradeskills.indicators`
 
 > Les chiffres de cette leçon (frais, règles fiscales, plafonds de levier, prix historiques arrondis) peuvent changer ou être approximatifs. Vérifie chacun avant de t'en servir : xetra-gold.com, bafin.de, esma.europa.eu, gold.org (World Gold Council). Pour la fiscalité, demande à un Steuerberater.
 
@@ -101,7 +101,7 @@ Tu dois pouvoir expliquer chacune avec tes mots avant le palier 2 :
 
 **L'ATR** (Average True Range, module 03) mesure l'amplitude moyenne d'une journée. Si l'or bouge en moyenne de 30 € par jour, un stop à 5 € serait touché par le bruit ; un stop à 2,5 × 30 = 75 € laisse respirer le trade.
 
-**La taille de position** (module 04) :
+**La taille de position** (module 02) :
 
 ```
 nombre de titres = (capital × 1 %) ÷ (prix d'entrée − stop)

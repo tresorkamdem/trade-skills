@@ -1,6 +1,6 @@
-# Module 02 · Exercices
+# Module 04 · Exercices
 
-Solutions : `python modules/02-analyse-fondamentale/solutions/solutions_02.py`
+Solutions : `python modules/04-analyse-fondamentale/solutions/solutions_04.py`
 
 1. **Ratios.** Une entreprise cote 45 EUR, 200 millions d'actions. Chiffre d'affaires 6 000 M, EBIT 900 M, résultat net 600 M, fonds propres 4 000 M, dette 2 500 M, trésorerie 700 M, dividendes 240 M. Calcule PER, EV/EBIT, ROE, marge opérationnelle, dette nette / fonds propres et rendement du dividende.
 

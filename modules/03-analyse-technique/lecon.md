@@ -2,7 +2,7 @@
 
 **Objectif** : lire un graphique, connaître les indicateurs courants, savoir ce qu'ils calculent vraiment, et surtout **tester** s'ils apportent quelque chose plutôt que d'y croire.
 
-**Durée** : 3 semaines · **Prérequis** : modules 01 et 04
+**Durée** : 3 semaines · **Prérequis** : modules 01 et 02
 
 ## 1. Ce qu'est (et n'est pas) l'analyse technique
 
@@ -65,7 +65,7 @@ Le simulateur `synthetic_ohlcv` produit des prix **sans aucune structure** : tou
 
 ## 7. Un système complet, pas un indicateur
 
-Un indicateur ne suffit pas. Un système précise : le filtre de tendance, le signal d'entrée, le stop (en ATR), la taille de position (module 04), la sortie, et les conditions où on ne trade pas (annonces, faible liquidité).
+Un indicateur ne suffit pas. Un système précise : le filtre de tendance, le signal d'entrée, le stop (en ATR), la taille de position (module 02), la sortie, et les conditions où on ne trade pas (annonces, faible liquidité).
 
 Exemple de système de suivi de tendance :
 

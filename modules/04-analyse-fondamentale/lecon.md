@@ -1,4 +1,4 @@
-# Module 02 · Analyse fondamentale
+# Module 04 · Analyse fondamentale
 
 **Objectif** : comprendre ce que vaut une entreprise, lire ses comptes, suivre le contexte macroéconomique, et savoir quand l'information fondamentale compte pour un trader.
 
