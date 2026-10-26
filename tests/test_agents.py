@@ -80,6 +80,16 @@ def test_target_weights_respect_cap(source):
     assert (w >= -1e-9).all() and (w <= 0.35 + 1e-9).all()
 
 
+def test_long_term_keeps_asset_with_missing_day(source):
+    """Un jour sans cotation pour un seul actif ne le fait pas sortir de la poche long terme."""
+    donnees = source.historique(LONG.univers, "long_terme")
+    trou = donnees["A"].index[-10]
+    donnees["A"] = donnees["A"].drop(trou)
+    m = time_machine.rejouer(LONG, donnees).moteur
+    assert "A" in m.courtier.positions
+    assert len(m.courtier.positions) >= 3
+
+
 @pytest.mark.parametrize("poche", [SWING, DAY, LONG], ids=lambda p: p.style)
 def test_no_look_ahead(poche, source):
     """Couper l'historique à une date ne change rien à ce qui s'est passé avant."""

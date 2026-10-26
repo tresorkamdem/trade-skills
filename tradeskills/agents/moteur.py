@@ -160,7 +160,8 @@ class Moteur:
     def _reequilibrer(self, t) -> None:
         c, poche = self.courtier, self.poche
         fenetre = poche.param("fenetre")
-        R = self.closes.loc[:t].pct_change().iloc[1:].tail(fenetre).dropna(axis=1)
+        # ffill : un jour sans cotation (férié d'une seule place) ne doit pas écarter l'actif du calcul
+        R = self.closes.loc[:t].ffill().pct_change().iloc[1:].tail(fenetre).dropna(axis=1)
         if len(R) < fenetre or R.empty:
             return
         cibles = budget.poids_cibles(R, poche)
