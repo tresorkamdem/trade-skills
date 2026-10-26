@@ -195,5 +195,18 @@ def test_snapshot_is_strict_json_and_publish_calls_trading_ingest(tmp_path, monk
     url, entetes, corps = envois[0]
     assert url == "https://xyz.supabase.co/rest/v1/rpc/trading_ingest"
     assert entetes["Apikey"] == "anon-key" and corps["p_token"] == "jeton" and corps["p_payload"]["version"] == 1
+    instantane.publier(inst, " https://xyz.supabase.co/rest/v1/ ", "anon-key", "jeton")
+    assert envois[1][0] == "https://xyz.supabase.co/rest/v1/rpc/trading_ingest"
     with pytest.raises(RuntimeError):
         instantane.publier(inst, "", "", "")
+
+    import io
+    import urllib.error
+
+    def refus(req, timeout):
+        raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, io.BytesIO(b'{"code":"PGRST202"}'))
+
+    monkeypatch.setattr("urllib.request.urlopen", refus)
+    with pytest.raises(RuntimeError, match="PGRST202") as err:
+        instantane.publier(inst, "https://xyz.supabase.co", "anon-key", "jeton")
+    assert "migration 12" in str(err.value) and "jeton" not in str(err.value)

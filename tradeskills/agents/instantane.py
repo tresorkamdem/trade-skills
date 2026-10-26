@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -65,9 +66,10 @@ def publier(instantane: dict, url: str | None = None, cle: str | None = None, je
     """Envoie l'instantané à SESHAT. Variables : SESHAT_SUPABASE_URL, SESHAT_SUPABASE_ANON_KEY, SESHAT_ROBOT_TOKEN.
 
     Renvoie l'identifiant du rapport créé dans SESHAT."""
-    url = (url or os.environ.get("SESHAT_SUPABASE_URL", "")).rstrip("/")
-    cle = cle or os.environ.get("SESHAT_SUPABASE_ANON_KEY")
-    jeton = jeton or os.environ.get("SESHAT_ROBOT_TOKEN")
+    url = (url or os.environ.get("SESHAT_SUPABASE_URL", "")).strip().rstrip("/")
+    # l'URL copiée depuis Supabase se termine parfois par /rest/v1 : on ne garde que la racine
+    url = url.removesuffix("/rest/v1").rstrip("/")
+    cle, jeton = (cle or os.environ.get("SESHAT_SUPABASE_ANON_KEY", "")).strip(), (jeton or os.environ.get("SESHAT_ROBOT_TOKEN", "")).strip()
     if not (url and cle and jeton):
         raise RuntimeError("SESHAT_SUPABASE_URL, SESHAT_SUPABASE_ANON_KEY et SESHAT_ROBOT_TOKEN sont nécessaires")
     corps = json.dumps({"p_token": jeton, "p_payload": instantane}, ensure_ascii=False, allow_nan=False).encode()
@@ -76,8 +78,21 @@ def publier(instantane: dict, url: str | None = None, cle: str | None = None, je
         data=corps,
         headers={"content-type": "application/json", "apikey": cle, "authorization": f"Bearer {cle}"},
     )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return json.loads(r.read().decode() or "null")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.loads(r.read().decode() or "null")
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"SESHAT a refusé l'envoi ({e.code}) : {_explication(e.code)}\n"
+                           f"Adresse appelée : {url}/rest/v1/rpc/trading_ingest\n"
+                           f"Réponse de Supabase : {e.read().decode(errors='replace')[:500]}") from None
+
+
+def _explication(code: int) -> str:
+    return {
+        401: "clé SESHAT_SUPABASE_ANON_KEY refusée (prendre la clé anon « eyJ… » du projet)",
+        403: "jeton SESHAT_ROBOT_TOKEN inconnu (le recopier depuis Radar → Automatique)",
+        404: "fonction trading_ingest introuvable : migration 12 non exécutée, ou mauvais projet dans SESHAT_SUPABASE_URL",
+    }.get(code, "voir la réponse ci-dessous")
 
 
 # --- morceaux -----------------------------------------------------------------------------------
