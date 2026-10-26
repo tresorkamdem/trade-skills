@@ -93,6 +93,20 @@ Le workflow `.github/workflows/quotidien.yml` fait les quatre étapes chaque soi
 - Il utilise `agents/config.json` s'il existe, sinon `agents/config.exemple.json`.
 - Le dépôt est public : le suivi papier est donc visible de tous. Les cours Yahoo, eux, restent dans le cache d'Actions.
 
+## Dans SESHAT
+
+La section **Trading** de SESHAT (le backoffice de MAÀT Analytics) affiche les mêmes informations dans une interface complète et privée. Le workflow du soir y envoie un instantané JSON (`publier`) par la fonction Supabase `trading_ingest`, avec le jeton robot de ton compte SESHAT : aucune clé de service n'est utilisée.
+
+Mise en place, une seule fois :
+1. Dans SESHAT, **Radar → Automatik** : crée le jeton robot s'il n'existe pas et copie-le.
+2. Dans ce dépôt, **Settings → Secrets and variables → Actions**, ajoute :
+   - `SESHAT_SUPABASE_URL` : l'URL du projet Supabase de SESHAT (`https://xxxx.supabase.co`) ;
+   - `SESHAT_SUPABASE_ANON_KEY` : sa clé `anon` / publishable (pas la clé secrète) ;
+   - `SESHAT_ROBOT_TOKEN` : le jeton robot.
+3. Lance le workflow à la main une fois : la section Trading de SESHAT se remplit.
+
+Sur ton ordinateur : `python -m tradeskills.agents publier --source cache:donnees/marche` avec les trois mêmes variables d'environnement. Sans elles, la commande écrit seulement `agents/rapports/instantane.json`.
+
 ## La poche TradingView
 
 1. Le serveur `node/webhook.mjs` reçoit tes alertes et ajoute chacune à `node/signaux.jsonl` (voir `node/README.md`).
