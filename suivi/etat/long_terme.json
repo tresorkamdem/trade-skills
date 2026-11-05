@@ -1,12 +1,12 @@
 {
  "poche": "long_terme",
- "derniere_date": "2026-11-02 00:00:00",
+ "derniere_date": "2026-11-03 00:00:00",
  "dernier_prix": {
-  "EUNL.DE": 129.92999267578125,
-  "IS3N.DE": 45.38600158691406,
-  "EXS1.DE": 214.10000610351562,
-  "EUNH.DE": 105.57499694824219,
-  "4GLD.DE": 113.91999816894531
+  "EUNL.DE": 128.97500610351562,
+  "IS3N.DE": 44.72200012207031,
+  "EXS1.DE": 213.14999389648438,
+  "EUNH.DE": 105.4800033569336,
+  "4GLD.DE": 112.9000015258789
  },
  "plus_haut": 29957.560940237334,
  "historique": [
@@ -5133,64 +5133,64 @@
   [
    "2026-11-02 00:00:00",
    28505.433343578447
+  ],
+  [
+   "2026-11-03 00:00:00",
+   28502.40090799718
   ]
  ],
  "coupe_circuit": null,
  "courtier": {
-  "cash": 316.9091583977816,
+  "cash": 787.070097450307,
   "cout_bps": 10,
   "glissement_bps": 2.0,
   "positions": {
    "EUNH.DE": {
     "symbole": "EUNH.DE",
-    "quantite": 267,
+    "quantite": 106,
     "prix_entree": 105.84033623990695,
     "date_entree": "2022-11-02 00:00:00",
     "setup": "",
     "stop": null,
     "stop_initial": null,
     "objectif": null,
-    "frais": 29.29554237404425
-   }
-  },
-  "ordres": [
-   {
-    "symbole": "4GLD.DE",
-    "quantite": 18,
-    "motif": "reequilibrage",
-    "stop": null,
-    "objectif": null,
-    "setup": "",
-    "risque_max": null
+    "frais": 46.24464658030341
    },
-   {
-    "symbole": "EUNH.DE",
-    "quantite": -161,
-    "motif": "reequilibrage",
-    "stop": null,
-    "objectif": null,
-    "setup": "",
-    "risque_max": null
-   },
-   {
-    "symbole": "EUNL.DE",
-    "quantite": 86,
-    "motif": "reequilibrage",
-    "stop": null,
-    "objectif": null,
-    "setup": "",
-    "risque_max": null
-   },
-   {
+   "EXS1.DE": {
     "symbole": "EXS1.DE",
     "quantite": 16,
-    "motif": "reequilibrage",
-    "stop": null,
-    "objectif": null,
+    "prix_entree": 211.84236305236817,
+    "date_entree": "2026-11-03 00:00:00",
     "setup": "",
-    "risque_max": null
+    "stop": null,
+    "stop_initial": null,
+    "objectif": null,
+    "frais": 3.3894778088378907
+   },
+   "4GLD.DE": {
+    "symbole": "4GLD.DE",
+    "quantite": 18,
+    "prix_entree": 112.08240955810547,
+    "date_entree": "2026-11-03 00:00:00",
+    "setup": "",
+    "stop": null,
+    "stop_initial": null,
+    "objectif": null,
+    "frais": 2.0174833720458984
+   },
+   "EUNL.DE": {
+    "symbole": "EUNL.DE",
+    "quantite": 86,
+    "prix_entree": 128.3556678314209,
+    "date_entree": "2026-11-03 00:00:00",
+    "setup": "",
+    "stop": null,
+    "stop_initial": null,
+    "objectif": null,
+    "frais": 11.038587433502197
    }
-  ],
+  },
+  "ordres": [],
   "trades": [],
   "mouvements": [
    {
@@ -6332,6 +6332,34 @@
     "symbole": "EUNH.DE",
     "quantite": -1,
     "prix": 107.92717608987633,
+    "motif": "reequilibrage"
+   },
+   {
+    "date": "2026-11-03 00:00:00",
+    "symbole": "EUNH.DE",
+    "quantite": -161,
+    "prix": 105.27393916931153,
+    "motif": "reequilibrage"
+   },
+   {
+    "date": "2026-11-03 00:00:00",
+    "symbole": "EXS1.DE",
+    "quantite": 16,
+    "prix": 211.84236305236817,
+    "motif": "reequilibrage"
+   },
+   {
+    "date": "2026-11-03 00:00:00",
+    "symbole": "4GLD.DE",
+    "quantite": 18,
+    "prix": 112.08240955810547,
+    "motif": "reequilibrage"
+   },
+   {
+    "date": "2026-11-03 00:00:00",
+    "symbole": "EUNL.DE",
+    "quantite": 86,
+    "prix": 128.3556678314209,
     "motif": "reequilibrage"
    }
   ]
