@@ -1,6 +1,6 @@
 {
  "poche": "swing",
- "derniere_date": "2026-11-04 00:00:00",
+ "derniere_date": "2026-11-05 00:00:00",
  "dernier_prix": {
   "SXR8.DE": 748.219970703125,
   "SXRV.DE": 1530.0,
@@ -8,10 +8,10 @@
   "EXS1.DE": 210.85000610351562,
   "IS3N.DE": 46.05400085449219,
   "4GLD.DE": 117.19000244140625,
-  "AAPL": 349.510009765625,
-  "MSFT": 555.7999877929688,
-  "NVDA": 200.1300048828125,
-  "AMZN": 266.0299987792969,
+  "AAPL": 344.1700134277344,
+  "MSFT": 535.9299926757812,
+  "NVDA": 181.60000610351562,
+  "AMZN": 260.2099914550781,
   "SAP.DE": 213.14999389648438,
   "SIE.DE": 266.20001220703125,
   "ALV.DE": 434.79998779296875
@@ -5217,11 +5217,15 @@
   [
    "2026-11-04 00:00:00",
    13104.856713000641
+  ],
+  [
+   "2026-11-05 00:00:00",
+   12970.212473162426
   ]
  ],
  "coupe_circuit": null,
  "courtier": {
-  "cash": 7503.456871692047,
+  "cash": 3924.042703875317,
   "cout_bps": 5.0,
   "glissement_bps": 2.0,
   "positions": {
@@ -5246,28 +5250,31 @@
     "stop_initial": 423.2754167022419,
     "objectif": null,
     "frais": 1.5270053827331542
-   }
-  },
-  "ordres": [
-   {
+   },
+   "MSFT": {
     "symbole": "MSFT",
     "quantite": 4,
-    "motif": "entree",
+    "prix_entree": 555.0509904418946,
+    "date_entree": "2026-11-05 00:00:00",
+    "setup": "cassure_donchian",
     "stop": 526.1242309357478,
+    "stop_initial": 526.1242309357478,
     "objectif": null,
-    "setup": "cassure_donchian",
-    "risque_max": 118.70302742888362
+    "frais": 1.110101980883789
    },
-   {
+   "AMZN": {
     "symbole": "AMZN",
-    "quantite": 7,
-    "motif": "entree",
-    "stop": 248.87728961148468,
-    "objectif": null,
+    "quantite": 5,
+    "prix_entree": 271.4842786743164,
+    "date_entree": "2026-11-05 00:00:00",
     "setup": "cassure_donchian",
-    "risque_max": 120.06896417468533
+    "stop": 248.87728961148468,
+    "stop_initial": 248.87728961148468,
+    "objectif": null,
+    "frais": 0.678710696685791
    }
-  ],
+  },
+  "ordres": [],
   "trades": [
    {
     "date": "2022-08-11",
@@ -11461,6 +11468,20 @@
     "quantite": -8,
     "prix": 336.3081617330259,
     "motif": "stop"
+   },
+   {
+    "date": "2026-11-05 00:00:00",
+    "symbole": "MSFT",
+    "quantite": 4,
+    "prix": 555.0509904418946,
+    "motif": "entree"
+   },
+   {
+    "date": "2026-11-05 00:00:00",
+    "symbole": "AMZN",
+    "quantite": 5,
+    "prix": 271.4842786743164,
+    "motif": "entree"
    }
   ]
  }

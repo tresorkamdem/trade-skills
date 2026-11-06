@@ -4,18 +4,18 @@
 
 ## Time Machine · swing (swing)
 
-Du 2021-10-25 au 2026-11-04, capital 10,000 → 13,018.
+Du 2021-10-25 au 2026-11-05, capital 10,000 → 13,079.
 
 | Mesure | Poche | Référence 1/n |
 | --- | --- | --- |
-| rendement_annuel | 0.052 | 0.188 |
-| vol_annuelle | 0.077 | 0.158 |
-| sharpe | 0.702 | 1.171 |
-| sortino | 1.023 | 1.702 |
+| rendement_annuel | 0.053 | 0.188 |
+| vol_annuelle | 0.078 | 0.158 |
+| sharpe | 0.710 | 1.169 |
+| sortino | 1.037 | 1.701 |
 | max_drawdown | -0.110 | -0.243 |
-| calmar | 0.479 | 0.775 |
+| calmar | 0.487 | 0.775 |
 
-Sharpe : intervalle de confiance à 95 % [-0.15 ; 1.57] : contient 0, résultat non significatif.
+Sharpe : intervalle de confiance à 95 % [-0.18 ; 1.63] : contient 0, résultat non significatif.
 
 ### Trades
 
@@ -31,18 +31,18 @@ Sharpe : intervalle de confiance à 95 % [-0.15 ; 1.57] : contient 0, résultat 
 
 ## Time Machine · day (day)
 
-Du 2026-07-31 au 2026-11-04, capital 5,000 → 4,733.
+Du 2026-07-31 au 2026-11-05, capital 5,000 → 4,733.
 
 | Mesure | Poche | Référence 1/n |
 | --- | --- | --- |
-| rendement_annuel | -0.187 | 0.428 |
-| vol_annuelle | 0.039 | 0.243 |
-| sharpe | -5.284 | 1.586 |
-| sortino | -5.771 | 2.332 |
-| max_drawdown | -0.066 | -0.120 |
-| calmar | -2.841 | 3.565 |
+| rendement_annuel | -0.184 | 0.041 |
+| vol_annuelle | 0.039 | 0.288 |
+| sharpe | -5.241 | 0.283 |
+| sortino | -5.729 | 0.362 |
+| max_drawdown | -0.066 | -0.157 |
+| calmar | -2.803 | 0.260 |
 
-Sharpe : intervalle de confiance à 95 % [-9.10 ; -4.40].
+Sharpe : intervalle de confiance à 95 % [-9.00 ; -4.20].
 
 ### Trades
 
@@ -59,18 +59,18 @@ Sharpe : intervalle de confiance à 95 % [-9.10 ; -4.40].
 
 ## Time Machine · long_terme (long_terme)
 
-Du 2021-10-25 au 2026-11-03, capital 20,000 → 31,924.
+Du 2021-10-25 au 2026-11-04, capital 20,000 → 32,289.
 
 | Mesure | Poche | Référence 1/n |
 | --- | --- | --- |
-| rendement_annuel | 0.096 | 0.090 |
+| rendement_annuel | 0.099 | 0.093 |
 | vol_annuelle | 0.066 | 0.098 |
-| sharpe | 1.426 | 0.930 |
-| sortino | 2.146 | 1.321 |
+| sharpe | 1.455 | 0.957 |
+| sortino | 2.196 | 1.363 |
 | max_drawdown | -0.075 | -0.144 |
-| calmar | 1.288 | 0.626 |
+| calmar | 1.320 | 0.647 |
 
-Sharpe : intervalle de confiance à 95 % [0.68 ; 2.34].
+Sharpe : intervalle de confiance à 95 % [0.67 ; 2.37].
 
 ### Trades
 
@@ -78,16 +78,16 @@ Rééquilibrages mensuels : 209 ordres.
 
 ## Time Machine · tradingview (signaux)
 
-Du 2021-10-25 au 2026-11-04, capital 5,000 → 5,000.
+Du 2021-10-25 au 2026-11-05, capital 5,000 → 5,000.
 
 | Mesure | Poche | Référence 1/n |
 | --- | --- | --- |
-| rendement_annuel | 0.000 | 0.198 |
-| vol_annuelle | 0.000 | 0.179 |
-| sharpe | nan | 1.096 |
-| sortino | nan | 1.605 |
+| rendement_annuel | 0.000 | 0.196 |
+| vol_annuelle | 0.000 | 0.180 |
+| sharpe | nan | 1.086 |
+| sortino | nan | 1.591 |
 | max_drawdown | 0.000 | -0.281 |
-| calmar | nan | 0.705 |
+| calmar | nan | 0.699 |
 
 Sharpe : trop peu de jours de données pour un intervalle de confiance.
 
